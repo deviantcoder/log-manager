@@ -1,0 +1,20 @@
+body {
+    background: linear-gradient(135deg, #11181d, #092422);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: rgba(22, 53, 52, 0.5) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px);
+}
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+footer {
+    /* background: rgba(0, 9, 45, 0.5) !important; */
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px);
+}

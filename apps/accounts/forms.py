@@ -3,6 +3,9 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import get_user_model
 
 
+User = get_user_model()
+
+
 class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -14,7 +17,7 @@ class SignupForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
     class Meta:
-        model = get_user_model()
+        model = User
         fields = (
             'email', 'username', 'first_name', 'last_name', 'password1', 'password2'
         )
@@ -33,6 +36,6 @@ class SignupForm(UserCreationForm):
         user.email = self.cleaned_data.get('email')
 
         if commit:
-            user.save(update_fields=['email'])
-
+            user.save()
+        
         return user
