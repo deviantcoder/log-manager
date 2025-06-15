@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.views import generic
@@ -54,3 +54,7 @@ class SignupUserView(generic.CreateView):
                 messages.warning(self.request, f'{field.capitalize()}: {error}')
 
         return super().form_invalid(form)
+    
+
+class LogoutUserView(LogoutView):
+    pass
