@@ -1,0 +1,54 @@
+{% extends "_base.html" %}
+
+{% load widget_tweaks %}
+
+{% block title %}
+    Sign In
+{% endblock title %}
+
+{% block content %}
+    <div class="d-flex justify-content-center m-3">
+        <div class="card shadow-lg p-4" style="max-width: 30rem; width: 100%;">
+            <div class="card-body text-center">
+                <h3 class="card-title mb-4 fw-bold">Sign In</h3>
+                <form method="POST" action="{% url 'accounts:login' %}">
+                    {% csrf_token %}
+                    <div class="mb-3 text-start">
+                        {{ form.username|add_label_class:"form-label" }}
+                        {% render_field form.username class="form-control" %}
+                    </div>
+                    <div class="mb-3 text-start">
+                        {{ form.password|add_label_class:"form-label" }}
+                        {% render_field form.password class="form-control" %}
+                    </div>
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endif %}
+                    <button type="submit" class="btn btn-primary btn-lg w-100 mt-2">Sign In</button>
+                </form>
+                <div class="mt-4 text-muted small">
+                    <p>
+                        Don’t have an account? <a href="" class="text-decoration-none text-primary">Sign up</a>
+                    </p>
+                </div>
+                <hr class="my-4">
+                <p class="text-muted mb-2 small">or sign in with:</p>
+                <div class="d-flex justify-content-center flex-wrap gap-4">
+                    <a href="" class="btn btn-outline-light d-flex align-items-center px-3 py-2">
+                        <i class="bi bi-google me-2" style="font-size: 1.2rem;"></i>
+                        <span>Google</span>
+                    </a>
+                    <a href="" class="btn btn-outline-light d-flex align-items-center px-3 py-2">
+                        <i class="bi bi-github me-2" style="font-size: 1.2rem;"></i>
+                        <span>GitHub</span>
+                    </a>
+                </div>
+            </div> 
+        </div>
+    </div>
+{% endblock content %}
