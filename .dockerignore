@@ -1,0 +1,8 @@
+!.env.project
+!.env.vault
+.idea/
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.log
