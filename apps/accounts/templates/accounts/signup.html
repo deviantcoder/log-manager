@@ -1,0 +1,87 @@
+{% extends '_base.html' %}
+
+{% load widget_tweaks %}
+
+{% block head_title %}
+    Sign up
+{% endblock head_title %}
+
+{% block content %}
+<div class="d-flex justify-content-center m-3 mt-4">
+    <div class="card shadow-lg p-4" style="max-width: 40rem; width: 100%;">
+        <div class="card-body text-center">
+            <h3 class="card-title mb-4 fw-bold">Sign Up</h3>
+            <form method="POST" action="{% url 'accounts:signup' %}">
+                {% csrf_token %}
+                <div class="row mb-3 text-start">
+                    <div class="col-md-6">
+                        <i class="bi bi-envelope-at-fill me-2"></i> {{ form.email|add_label_class:"form-label" }}
+                        {% render_field form.email class="form-control" %}
+                        {% if form.email.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.email.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <i class="bi bi-person-fill me-2"></i> {{ form.username|add_label_class:"form-label" }}
+                        {% render_field form.username class="form-control" %}
+                        {% if form.username.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.username.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3 text-start">
+                    <div class="col-md-6">
+                        <i class="bi bi-person-lines-fill me-2"></i> {{ form.first_name|add_label_class:"form-label" }}
+                        {% render_field form.first_name class="form-control" %}
+                        {% if form.first_name.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.first_name.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <i class="bi bi-person-lines-fill me-2"></i> {{ form.last_name|add_label_class:"form-label" }}
+                        {% render_field form.last_name class="form-control" %}
+                        {% if form.last_name.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.last_name.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3 text-start">
+                    <div class="col-md-6">
+                        <i class="bi bi-lock-fill me-2"></i> {{ form.password1|add_label_class:"form-label" }}
+                        {% render_field form.password1 class="form-control" %}
+                        {% if form.password1.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.password1.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <i class="bi bi-lock-fill me-2"></i> {{ form.password2|add_label_class:"form-label" }}
+                        {% render_field form.password2 class="form-control" %}
+                        {% if form.password2.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.password2.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100 mt-2">Sign Up</button>
+            </form>
+            <div class="mt-4 text-muted small">
+                <p>
+                    Already have an account? <a href="{% url 'accounts:login' %}" class="text-decoration-none text-primary">Sign in</a>
+                </p>
+            </div>
+            {% include "accounts/includes/social_options.html" %}
+        </div> 
+    </div>
+</div>
+{% endblock content %}

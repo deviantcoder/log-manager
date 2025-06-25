@@ -14,8 +14,8 @@
             </ul>
             {% if not user.is_authenticated %}
                 <div class="ms-3">
-                    <a href="" class="btn btn-outline-light">Login</a>
-                    <a href="" class="btn btn-light ms-2">Sign Up</a>
+                    <a href="{% url 'accounts:login' %}" class="btn btn-outline-light">Login</a>
+                    <a href="{% url 'accounts:signup' %}" class="btn btn-light ms-2">Sign Up</a>
                 </div>
             {% else %}
                 <div class="dropdown ms-3">
@@ -26,7 +26,7 @@
                         <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <form action="" method="post">
+                            <form action="{% url 'accounts:logout' %}" method="post">
                                 {% csrf_token %}
                                 <button type="submit" class="dropdown-item text-danger"><i class="bi bi-box-arrow-left me-2"></i>Logout</button>
                             </form>

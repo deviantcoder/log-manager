@@ -9,7 +9,8 @@ class UserAdmin(admin.ModelAdmin):
 
     list_display = (
         'username',
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'email_verified',
         'is_active',
