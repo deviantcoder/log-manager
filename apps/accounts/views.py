@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 from django.views import generic
 from django.contrib import messages
@@ -56,3 +57,7 @@ class SignupUserView(generic.CreateView):
             for error in errors:
                 messages.warning(self.request, f'{field.capitalize()}: {error}')
         return super().form_invalid(form)
+    
+
+class AccountSettingsView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'accounts/account_settings.html'
