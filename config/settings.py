@@ -156,3 +156,14 @@ SOCIAL_AUTH_PIPELINE = (
     'config.pipeline.verify_social_email',
     'social_core.pipeline.user.user_details',
 )
+
+
+# Email config
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = config('EMAIL_HOST', cast=str, default='smtp.gmail.com')
+EMAIL_PORT = config('EMAIL_PORT', cast=str, default='587')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool, default=True)
+EMAIL_USE_SSL = config('EMAIL_USE_SSL', cast=bool, default=False)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', cast=str)
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', cast=str)
