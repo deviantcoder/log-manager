@@ -1,5 +1,5 @@
 {% extends '_base.html' %}
-
+{% load static %}
 {% block head_title %}
     Account Settings
 {% endblock head_title %}
@@ -85,7 +85,13 @@
                         <div class="card-body px-4 pb-4 text-center">
                             <div class="mb-4">
                                 <div>
-                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Profile Picture" class="rounded-circle object-fit-cover profile-avatar shadow-lg border border-3 border-white">
+                                    <img 
+                                    {% if user.image %}    
+                                        src="{{ user.image.url }}"
+                                    {% else %}
+                                        src="{% static 'img/def.png' %}" 
+                                    {% endif %}                                        
+                                    alt="Profile Picture" class="rounded-circle object-fit-cover profile-avatar shadow-lg border border-3 border-white">                                        
                                 </div>
                             </div>
                             <form method="post" enctype="multipart/form-data" class="d-grid gap-2" id="imageForm">

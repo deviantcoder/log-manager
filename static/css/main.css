@@ -3,3 +3,8 @@
     height: 120px;
     object-fit: cover;
 }
+.profile-avatar-small {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}

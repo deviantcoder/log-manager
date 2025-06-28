@@ -1,3 +1,4 @@
+{% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top border-bottom">
     <div class="container">
         <a class="navbar-brand" href="/">
@@ -20,7 +21,14 @@
             {% else %}
                 <div class="dropdown ms-3">
                     <button class="btn dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle fs-4 me-2"></i> {{ user.username }}
+                            <img class="profile-avatar-small rounded-circle border me-1" 
+                            {% if user.image %}
+                                src="{{ user.image.url }}"
+                            {% else %}
+                                src="{% static 'img/def.png' %}"    
+                            {% endif %}  
+                            alt="">
+                            {{ user.username }}
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                         <li><a class="dropdown-item" href="{% url 'accounts:settings' %}"><i class="bi bi-gear me-2"></i>Settings</a></li>
