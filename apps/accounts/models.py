@@ -7,6 +7,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import FileExtensionValidator
 
+from .utils import compress_image
+
 
 ALLOWED_EXTENSIONS = ('jpg', 'jpeg', 'png', 'gif', 'webp')
 
@@ -43,6 +45,9 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+    
+    def save(self, *args, **kwargs):
+        return super().save(*args, **kwargs)
     
     @property
     def image_or_default(self):
