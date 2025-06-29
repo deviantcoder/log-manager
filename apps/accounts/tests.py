@@ -1,12 +1,28 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.contrib.auth import get_user_model, get_user
 from django.contrib.auth.models import AnonymousUser
 from django.urls import reverse
 from django.conf import settings
+from django.core.files.uploadedfile import SimpleUploadedFile
+
+from PIL import Image
+
+from io import BytesIO
+
+from tempfile import gettempdir
 
 
 User = get_user_model()
 login_url = getattr(settings, 'LOGIN_URL')
+
+
+def generate_test_image(format='JPEG'):
+    image = Image.new('RGB', (100, 100), color='blue')
+    image_io = BytesIO()
+    image.save(image_io, format=format)
+    image_io.seek(0)
+    
+    return SimpleUploadedFile('test.jpg', image_io.read(), content_type='image/jpeg')
 
 
 class TestUserLogin(TestCase):
@@ -133,3 +149,26 @@ class TestUserSignup(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(get_user(self.client), User.objects.get(username=self.username))
         self.assertTrue(get_user(self.client).is_authenticated)
+
+
+@override_settings(MEDIA_ROOT=gettempdir())
+class TestImageCompression(TestCase):
+    def test_compression_in_user_signup(self):
+        image = generate_test_image()
+        
+        response = self.client.post(
+            reverse('accounts:signup'),
+            data={
+                'username': 'testuser',
+                'email': 'testuser@example.com',
+                'password1': 'testpass123',
+                'password2': 'testpass123',
+                'image': image,
+            },
+            follow=True
+        )
+
+        self.assertEqual(response.status_code, 200)
+        user = get_user(self.client)
+        self.assertTrue(user.is_authenticated)
+        self.assertLess(user.image.size, image.size)
