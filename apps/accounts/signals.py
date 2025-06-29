@@ -1,6 +1,10 @@
+import os
+import shutil
+
 from django.contrib.auth import get_user_model
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
+from django.conf import settings
 
 from .utils import compress_image
 
@@ -23,5 +27,15 @@ def compress_user_image(sender, instance, **kwargs):
 
     try:
         instance.image = compress_image(instance.image)
+    except Exception as e:
+        pass # TODO: add logging here
+
+
+@receiver(post_delete, sender=User)
+def delete_user_media(sender, instance, **kwargs):
+    try:
+        path = f'media/accounts/{str(instance.public_id)[:8]}'
+        if os.path.exists(path):
+            shutil.rmtree(path)
     except Exception as e:
         pass # TODO: add logging here
