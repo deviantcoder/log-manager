@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, get_user_model
 from django.views import generic
 from django.contrib import messages
 
-from .forms import LoginForm, SignupForm
+from .forms import LoginForm, SignupForm, UsernameUpdateForm
+
+
+User = get_user_model()
 
 
 class LoginUserView(LoginView):
@@ -59,5 +63,28 @@ class SignupUserView(generic.CreateView):
         return super().form_invalid(form)
     
 
-class AccountSettingsView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'accounts/account_settings.html'
+@login_required
+def account_settings_view(request):
+    user = request.user
+    if request.method == 'POST':
+        if 'update_image' in request.POST:
+            new_image = request.FILES.get('image')
+            if new_image:
+                user.image = new_image
+                user.save()
+
+                messages.success(request, 'Profile image changed.')
+
+        if 'update_username' in request.POST:
+            form = UsernameUpdateForm(request.POST, current_user=user, instance=user)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Username updated.')
+            else:
+                for error in form.errors.values():
+                    messages.warning(request, error)
+
+        return redirect('accounts:settings')
+
+    context = {}
+    return render(request, 'accounts/account_settings.html', context)

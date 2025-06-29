@@ -47,7 +47,8 @@
                                     <span class="text-light fs-6">{{ user.email }}</span>
                                 </div>
                             </div>
-                            <form method="post" class="border-top border-secondary pt-4">
+                            <form action="{% url 'accounts:settings' %}" method="post" class="border-top border-secondary pt-4" id="usernameForm">
+                                {% csrf_token %}
                                 <div class="mb-4">
                                     <label for="username" class="form-label fw-semibold text-light mb-3">
                                         <i class="bi bi-person me-2"></i>Username
@@ -94,7 +95,8 @@
                                     alt="Profile Picture" class="rounded-circle object-fit-cover profile-avatar shadow-lg border border-3 border-white">                                        
                                 </div>
                             </div>
-                            <form method="post" enctype="multipart/form-data" class="d-grid gap-2" id="imageForm">
+                            <form action="{% url 'accounts:settings' %}" method="post" enctype="multipart/form-data" class="d-grid gap-2" id="imageForm">
+                                {% csrf_token %}
                                 <input type="file" name="image" class="d-none" id="imageInput" accept="image/*" onchange="this.form.submit();">
                                 <button type="button" class="btn btn-outline-light rounded-2" onclick="document.getElementById('imageInput').click();">
                                     <i class="bi bi-upload me-2"></i>Change Picture
