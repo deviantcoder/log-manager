@@ -1,9 +1,13 @@
 import os
+import logging
 
 from PIL import Image
 from io import BytesIO
 
 from django.core.files import File
+
+
+logger = logging.getLogger(__name__)
 
 
 def compress_image(file):
@@ -19,4 +23,4 @@ def compress_image(file):
             return File(image_io, name=name)
 
     except Exception as e:
-        pass    # TODO: add logging here
+        logger.warning(f'Image compression failed: {e}')
