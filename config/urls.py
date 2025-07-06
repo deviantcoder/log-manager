@@ -9,8 +9,11 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', generic.TemplateView.as_view(template_name="_base.html")),
+    
     path('accounts/', include('apps.accounts.urls')),
     path('accounts/social/', include('social_django.urls', namespace='social')),
+    
+    path('dashboard/', include('apps.dashboard.urls')),
 
     # password reset
     path(

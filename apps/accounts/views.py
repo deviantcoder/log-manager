@@ -72,7 +72,6 @@ def account_settings_view(request):
             if new_image:
                 user.image = new_image
                 user.save()
-
                 messages.success(request, 'Profile image changed.')
 
         if 'update_username' in request.POST:
