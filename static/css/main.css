@@ -22,9 +22,32 @@
 .add-org-card {
     background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
     border: 2px dashed rgba(102, 126, 234, 0.3);
-    min-height: 200px;
+    min-height: 150px;
     transition: all 0.3s ease;
 }
 .page-header {
     margin: -1.5rem -1.5rem 2rem -1.5rem;
+}
+.sidebar-item:hover {
+    background-color: rgb(48, 63, 83);
+}
+.bg-blue-gray {
+    background-color: #212832 !important;
+}
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.card-icon {
+    font-size: 2.5rem;
+    opacity: 0.6;
+    color: #667eea;
 }
