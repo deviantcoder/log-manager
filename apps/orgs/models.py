@@ -27,3 +27,22 @@ class Organization(models.Model):
             if Organization.objects.filter(slug__iexact=base_slug).exists():
                 self.slug = f'{base_slug}-{str(uuid())}'[:50]
         super().save(*args, **kwargs)
+
+
+class OrgMember(models.Model):
+    class ROLE_CHOICES(models.TextChoices):
+        ADMIN = ('admin', 'Admin')
+        MEMBER = ('member', 'Member')
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    org = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    role = models.CharField(
+        max_length=10, choices=ROLE_CHOICES.choices, default=ROLE_CHOICES.MEMBER
+    )
+    joined_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'org')
+
+    def __str__(self):
+        return self.user
