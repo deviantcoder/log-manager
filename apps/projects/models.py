@@ -13,6 +13,7 @@ class Project(models.Model):
     org = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='projects')
     description = models.TextField(max_length=500, null=True, blank=True)
 
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
