@@ -46,25 +46,36 @@
 {% block cards %}
     <h4>Organizations</h4>
     {% for org in owned_orgs %}
-        {% include 'dashboard/org_card.html' with obj=org %}
+        {% include 'dashboard/cards/org_card.html' with obj=org %}
     {% endfor %}
     <div class="col-md-4">
         <div class="add-org-card org-card h-100 d-flex flex-column border-dash align-items-center justify-content-center">
-            <button class="btn btn-primary">
-                <i class="bi bi-plus me-2"></i>Show More
-            </button>
+            {% if owned_orgs %}
+                <a href="{% url 'dashboard:orgs' %}" class="btn btn-primary">
+                    <i class="bi bi-plus me-2"></i>Show More
+                </a>
+            {% else %}
+                <h5 class="text-muted">No organizations yet.</h5>
+                <a href="{% url 'orgs:create_org' %}" class="btn btn-primary">
+                    <i class="bi bi-plus me-2"></i>Get Started
+                </a>
+            {% endif %}
         </div>
     </div>
     <hr>
     <h4>Projects</h4>
     {% for project in projects %}
-        {% include 'dashboard/project_card.html' with obj=project %}
+        {% include 'dashboard/cards/project_card.html' with obj=project %}
     {% endfor %}
     <div class="col-md-4">
         <div class="add-org-card org-card h-100 d-flex flex-column border-dash align-items-center justify-content-center">
-            <button class="btn btn-primary">
-                <i class="bi bi-plus me-2"></i>Show More
-            </button>
+            {% if projects %}
+                <a href="{% url 'dashboard:projects' %}" class="btn btn-primary">
+                    <i class="bi bi-plus me-2"></i>Show More
+                </a>
+            {% else %}
+                <h5 class="text-muted">No projects yet.</h5>
+            {% endif %}
         </div>
     </div>
 {% endblock cards %}

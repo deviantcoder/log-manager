@@ -10,7 +10,7 @@
 
 {% block cards %}
     {% for org in owned_orgs %}
-        {% include 'dashboard/org_card.html' with obj=org %}
+        {% include 'dashboard/cards/org_card.html' with obj=org %}
     {% endfor %}
-    {% include 'dashboard/create_new.html' with obj_name='Organization' %}
+    {% include 'dashboard/create_new.html' with obj_name='Organization' create_obj_url='orgs:create_org' %}
 {% endblock cards %}

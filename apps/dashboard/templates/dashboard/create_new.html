@@ -2,8 +2,8 @@
     <div class="add-org-card org-card h-100 d-flex flex-column border-dash align-items-center justify-content-center">
         <i class="bi bi-plus-circle add-org-icon"></i>
         <h5 class="add-org-title mb-3">Create New {{ obj_name }}</h5>
-        <button class="btn btn-primary">
+        <a href="{% url create_obj_url %}" class="btn btn-primary">
             <i class="bi bi-plus me-2"></i>Get Started
-        </button>
+        </a>
     </div>
 </div>
