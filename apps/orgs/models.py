@@ -45,4 +45,4 @@ class OrgMember(models.Model):
         unique_together = ('user', 'org')
 
     def __str__(self):
-        return self.user
+        return f'{self.user}: {self.org} ({self.role})'
