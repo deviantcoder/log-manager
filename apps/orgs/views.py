@@ -16,8 +16,8 @@ def create_org(request):
             org.save()
             messages.success(request, 'Organization created.')
             return redirect('dashboard:orgs')
-
-    form = OrganizationForm()
+    else:
+        form = OrganizationForm()
     context = {
         'form': form,
     }

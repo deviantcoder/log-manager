@@ -12,5 +12,5 @@
     {% for project in projects %}
         {% include 'dashboard/cards/project_card.html' with obj=project %}
     {% endfor %}
-    {% include 'dashboard/create_new.html' with obj_name='Project' create_obj_url='orgs:create_org' %}
+    {% include 'dashboard/create_new.html' with obj_name='Project' create_obj_url='projects:create_project' %}
 {% endblock cards %}

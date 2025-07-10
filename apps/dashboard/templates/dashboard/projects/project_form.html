@@ -2,17 +2,21 @@
 {% load widget_tweaks %}
 
 {% block title %}
-    Create an Organization
+    Create a Project
 {% endblock title %}
 
 {% block dashboard_content %}
 <div class="d-flex justify-content-center m-3 mt-2">
     <div class="p-4" style="max-width: 900px; width: 100%;">
         <div class="text-center">
-            <form method="POST" action="{% url 'orgs:create_org' %}">
+            <form method="POST" action="{% url 'projects:create_project' %}">
                 {% csrf_token %}
                 <div class="mb-3 text-start">
-                    <i class="bi bi-buildings me-2"></i> {{ form.name|add_label_class:"form-label" }}
+                    <i class="bi bi-folder me-2"></i> {{ form.org|add_label_class:"form-label" }}
+                    {% render_field form.org class="form-control" %}
+                </div>
+                <div class="mb-3 text-start">
+                    <i class="bi bi-folder me-2"></i> {{ form.name|add_label_class:"form-label" }}
                     {% render_field form.name class="form-control" %}
                 </div>
                 <div class="mb-3 text-start">
