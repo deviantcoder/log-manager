@@ -16,61 +16,8 @@
             {% block stats %}
             {% endblock stats %}
             <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card org-card rounded-3">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <h5>Acme Corporation</h5>
-                                    <p>Last activity: 2 hours ago</p>
-                                </div>
-                                <span class="badge bg-success">Active</span>
-                            </div>
-                        </div>
-                        <div class="org-card-footer p-3">
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-outline-primary btn-sm flex-fill">
-                                    <i class="bi bi-eye me-1"></i>View Details
-                                </button>
-                                <button class="btn btn-outline-secondary btn-sm">
-                                    <i class="bi bi-gear"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card org-card rounded-3">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <h5>Acme Corporation</h5>
-                                    <p>Last activity: 2 hours ago</p>
-                                </div>
-                                <span class="badge bg-success">Active</span>
-                            </div>
-                        </div>
-                        <div class="org-card-footer p-3">
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-outline-primary btn-sm flex-fill">
-                                    <i class="bi bi-eye me-1"></i>View Details
-                                </button>
-                                <button class="btn btn-outline-secondary btn-sm">
-                                    <i class="bi bi-gear"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="add-org-card org-card h-100 d-flex flex-column border-dash align-items-center justify-content-center">
-                        <i class="bi bi-plus-circle add-org-icon"></i>
-                        <h5 class="add-org-title mb-3">Create New Organization</h5>
-                        <button class="btn btn-primary">
-                            <i class="bi bi-plus me-2"></i>Get Started
-                        </button>
-                    </div>
-                </div>
+                {% block cards %}
+                {% endblock cards %}
             </div>
         </main>
     </div>

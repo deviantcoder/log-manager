@@ -2,12 +2,18 @@ from django.shortcuts import render
 
 
 def dashboard(request):
-    context = {}
+    user_orgs = request.user.owned_orgs.all()
+    context = {
+        'owned_orgs': user_orgs[:2],
+    }
     return render(request, 'dashboard/dashboard.html', context)
 
 
 def organizations(request):
-    context = {}
+    user_orgs = request.user.owned_orgs.all()
+    context = {
+        'owned_orgs': user_orgs,
+    }
     return render(request, 'dashboard/orgs.html', context)
 
 

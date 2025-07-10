@@ -7,3 +7,7 @@
 {% block description %}
     Manage your projects
 {% endblock description %}
+
+{% block cards %}
+    {% include 'dashboard/create_new.html' with obj_name='Project' %}
+{% endblock cards %}
