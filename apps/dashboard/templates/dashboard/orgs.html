@@ -10,7 +10,7 @@
 
 {% block cards %}
     {% for org in owned_orgs %}
-        {% include 'dashboard/card.html' with obj=org %}
+        {% include 'dashboard/org_card.html' with obj=org %}
     {% endfor %}
     {% include 'dashboard/create_new.html' with obj_name='Organization' %}
 {% endblock cards %}

@@ -1,10 +1,14 @@
 from django.shortcuts import render
 
+from apps.projects.models import Project
+
 
 def dashboard(request):
-    user_orgs = request.user.owned_orgs.all()
+    orgs = request.user.owned_orgs.all()
+    projects = Project.objects.filter(projectmember__user=request.user, status=Project.StatusChoices.ACTIVE)
     context = {
-        'owned_orgs': user_orgs[:2],
+        'owned_orgs': orgs[:2],
+        'projects': projects[:2],
     }
     return render(request, 'dashboard/dashboard.html', context)
 
@@ -18,5 +22,8 @@ def organizations(request):
 
 
 def projects(request):
-    context = {}
+    projects = Project.objects.filter(projectmember__user=request.user)
+    context = {
+        'projects': projects
+    }
     return render(request, 'dashboard/projects.html', context)

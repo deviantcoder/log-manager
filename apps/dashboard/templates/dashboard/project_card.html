@@ -1,0 +1,5 @@
+{% extends 'dashboard/card_base.html' %}
+
+{% block card_info %}
+    <p class="text-muted">{{ obj.description|slice:50 }}</p>
+{% endblock card_info %}

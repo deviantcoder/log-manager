@@ -9,5 +9,8 @@
 {% endblock description %}
 
 {% block cards %}
+    {% for project in projects %}
+        {% include 'dashboard/project_card.html' with obj=project %}
+    {% endfor %}
     {% include 'dashboard/create_new.html' with obj_name='Project' %}
 {% endblock cards %}

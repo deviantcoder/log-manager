@@ -4,9 +4,11 @@
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <h5 class="fw-bold">{{ obj.name }}</h5>
-                    <p>Some org info</p>
+                    {% block card_info %}
+                        <p>Some info</p>
+                    {% endblock card_info %}
                 </div>
-                <span class="badge bg-success">Active</span>
+                <span class="badge bg-secondary">{{ obj.status|capfirst }}</span>
             </div>
         </div>
         <div class="org-card-footer p-3">
