@@ -9,9 +9,18 @@ User = get_user_model()
 
 
 class Organization(models.Model):
+    class StatusChoices(models.TextChoices):
+        ACTIVE = ('active', 'Active')
+        INACTIVE = ('inactive', 'Inactive')
+        ARCHIVED = ('archived', 'Archived')
+
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owned_orgs')
+
+    status = models.CharField(
+        max_length=10, choices=StatusChoices.choices, default=StatusChoices.ACTIVE
+    )
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

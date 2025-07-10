@@ -8,10 +8,19 @@ User = get_user_model()
 
 
 class Project(models.Model):
+    class StatusChoices(models.TextChoices):
+        ACTIVE = ('active', 'Active')
+        INACTIVE = ('inactive', 'Inactive')
+        ARCHIVED = ('archived', 'Archived')
+
     name = models.CharField(max_length=100)
     slug = models.SlugField()
     org = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='projects')
     description = models.TextField(max_length=500, null=True, blank=True)
+
+    status = models.CharField(
+        max_length=10, choices=StatusChoices.choices, default=StatusChoices.ACTIVE
+    )
 
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created = models.DateTimeField(auto_now_add=True)
