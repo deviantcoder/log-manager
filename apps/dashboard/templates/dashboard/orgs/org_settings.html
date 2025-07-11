@@ -1,0 +1,9 @@
+{% extends 'dashboard/_base_dashboard.html' %}
+
+{% block title %}
+    <i class="bi bi-gear me-2"></i>Organization Settings: <span class="text-info">{{ org.name }}</span>
+{% endblock title %}
+
+{% block dashboard_content %}
+    {% include 'dashboard/orgs/_base_org_form.html' with action='Update' obj_url='orgs:org_settings' obj=org status=True %}
+{% endblock dashboard_content %}

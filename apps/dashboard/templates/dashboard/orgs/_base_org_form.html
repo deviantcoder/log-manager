@@ -1,28 +1,30 @@
-{% extends 'dashboard/_base_dashboard.html' %}
 {% load widget_tweaks %}
 
-{% block title %}
-    Create a Project
-{% endblock title %}
-
-{% block dashboard_content %}
 <div class="d-flex justify-content-center m-3 mt-2">
     <div class="p-4" style="max-width: 900px; width: 100%;">
         <div class="text-center">
-            <form method="POST" action="{% url 'projects:create_project' %}">
+            <form method="POST" 
+                {% if obj %}
+                    action="{% url obj_url obj.id %}"
+                {% else %}
+                    action="{% url obj_url %}"
+                {% endif %}
+            >
                 {% csrf_token %}
                 <div class="mb-3 text-start">
-                    <i class="bi bi-buildings me-2"></i> {{ form.org|add_label_class:"form-label" }}
-                    {% render_field form.org class="form-select" %}
-                </div>
-                <div class="mb-3 text-start">
-                    <i class="bi bi-folder me-2"></i> {{ form.name|add_label_class:"form-label" }}
+                    <i class="bi bi-buildings me-2"></i> {{ form.name|add_label_class:"form-label" }}
                     {% render_field form.name class="form-control" %}
                 </div>
                 <div class="mb-3 text-start">
                     <i class="bi bi-body-text me-2"></i> {{ form.description|add_label_class:"form-label" }}
                     {% render_field form.description class="form-control" style="max-height: 200px; min-height: 50px;" %}
                 </div>
+                {% if status %}
+                <div class="mb-3 text-start">
+                    <i class="bi bi-toggle-on me-2"></i> {{ form.status|add_label_class:"form-label" }}
+                    {% render_field form.status class="form-select" %}
+                </div>   
+                {% endif %}
                 {% if form.non_field_errors %}
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         {% for error in form.non_field_errors %}
@@ -31,9 +33,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 {% endif %}
-                <button type="submit" class="btn btn-primary btn-lg w-100 mt-2">Create</button>
+                <button type="submit" class="btn btn-primary btn-lg w-100 mt-2">{{ action }}</button>
             </form>
         </div> 
     </div>
 </div>
-{% endblock dashboard_content %}

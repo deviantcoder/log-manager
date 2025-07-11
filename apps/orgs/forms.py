@@ -7,7 +7,7 @@ class OrganizationForm(forms.ModelForm):
     class Meta:
         model = Organization
         fields = (
-            'name', 'description'
+            'name', 'status', 'description'
         )
 
     def __init__(self, *args, **kwargs):

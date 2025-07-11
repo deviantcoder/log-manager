@@ -1,7 +1,7 @@
 {% extends 'dashboard/_base_dashboard.html' %}
 
 {% block title %}
-    Organizations
+    <i class="bi bi-buildings me-2"></i>Organizations
 {% endblock title %}
 
 {% block description %}
@@ -9,8 +9,8 @@
 {% endblock description %}
 
 {% block cards %}
-    {% for org in owned_orgs %}
-        {% include 'dashboard/cards/org_card.html' with obj=org %}
+    {% for org in orgs %}
+        {% include 'dashboard/cards/org_card.html' with obj=org obj_settings_url='orgs:org_settings' obj_id=org.id %}
     {% endfor %}
     {% include 'dashboard/create_new.html' with obj_name='Organization' create_obj_url='orgs:create_org' %}
 {% endblock cards %}

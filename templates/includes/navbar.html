@@ -36,7 +36,7 @@
                             {{ user.username }}
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item" href="{% url 'accounts:settings' %}"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:settings' %}"><i class="bi bi-gear me-2"></i>Account Settings</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form action="{% url 'accounts:logout' %}" method="post">

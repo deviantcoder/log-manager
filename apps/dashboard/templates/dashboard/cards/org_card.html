@@ -1,1 +1,6 @@
 {% extends 'dashboard/cards/card_base.html' %}
+
+{% block card_info %}
+    <p class="text-muted small">{{ obj.description|slice:50 }}...</p>
+    <span class="text-muted"><i class="bi bi-folder"></i> Projects: {{ obj.projects.count }}</span>
+{% endblock card_info %}
