@@ -8,6 +8,11 @@
     height: 30px;
     object-fit: cover;
 }
+.profile-avatar-md {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
 .navbar {
     background: rgba(49, 56, 70, 0.3) !important;
     backdrop-filter: blur(10px) !important;
@@ -34,6 +39,9 @@
 .bg-blue-gray {
     background-color: #212832 !important;
 }
+.bg-dark-yellow {
+    background-color: #343203 !important;
+}
 .stat-number {
     font-size: 2.5rem;
     font-weight: 600;
@@ -52,5 +60,5 @@
     color: #667eea;
 }
 .outline-danger {
-    border: #9b1a1a 1px solid;
+    border: #9b1a1a 1px solid !important;
 }

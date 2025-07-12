@@ -1,0 +1,12 @@
+<div class="modal-header">
+    <span class="modal-title text-white fw-bold">Delete {{ obj.name }}</span>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="text-center">
+        <span class="text-white fw-bold fs-5">{{ obj.name }}</span>
+    </div>
+</div>
+<div class="modal-footer">
+    <a href="{% url 'orgs:delete_org_confirm' obj.id %}" class="btn btn-outline-light btn-sm w-100">I want to delete this organization</a>
+</div>

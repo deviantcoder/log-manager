@@ -34,7 +34,17 @@
                             Once you delete an organization, there is no going back. Please be certain.
                         </div>
                     </div>
-                    <button class="btn btn-outline-danger btn-sm">Delete this organization</button>
+                    <button
+                        hx-get="{% url 'orgs:delete_org' org.id %}"
+                        hx-target="#modal-content"
+                        hx-swap="innerHTML"
+                        hx-trigger="click"
+                        class="btn btn-outline-danger btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modal"
+                    >
+                        Delete this organization
+                    </button>
                 </div>
             </div>
         </div>

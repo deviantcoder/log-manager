@@ -1,0 +1,40 @@
+{% extends 'dashboard/_base_dashboard.html' %}
+
+{% block title %}
+    Confirm deletion
+{% endblock title %}
+
+{% block dashboard_content %}
+    <div class="d-flex justify-content-center m-3 mt-2">
+        <div class="p-4" style="max-width: 500px; width: 100%;">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <img src="{{ user.image.url }}" class="profile-avatar-md rounded-circle border me-3" alt="User Image">
+                        <span class="me-1">Signed in as</span><span class="text-white fw-bold">@{{ user.username }}</span>
+                    </div>
+                </div>
+            </div>
+            <form method="POST" action="{% url 'orgs:delete_org_confirm' obj.id %}" class="border rounded-2 bg-blue-gray p-3 mb-4">
+                {% csrf_token %}
+                <div class="mb-3 text-start">
+                    <label class="form-label">Password</label>
+                    <input class="form-control" type="password" name="password" id="password" placeholder="Enter your password">
+                </div>
+                {% if error %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ error }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+                <button type="submit" class="btn btn-success btn-sm w-100">Confirm</button>
+            </form>
+            <div class="card bg-dark-yellow">
+                <div class="card-body text-center">
+                    <i class="bi bi-exclamation-triangle me-2 text-warning"></i>
+                    <span>This action will result in permanent deletion!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock dashboard_content %}

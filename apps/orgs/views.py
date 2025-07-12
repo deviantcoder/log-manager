@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import HttpResponseForbidden
 
 from .models import Organization
 from .forms import OrganizationForm
@@ -26,8 +27,42 @@ def create_org(request):
 
 
 @login_required
+def delete_org(request, id):
+    org = get_object_or_404(Organization, pk=id)
+    context = {
+        'obj': org,
+    }
+    return render(request, 'dashboard/partials/modal_partial.html', context)
+
+
+@login_required
+def delete_org_confirm(request, id):
+    org = get_object_or_404(Organization, pk=id)
+
+    if request.user != org.owner:
+        return HttpResponseForbidden()
+    
+    context = {
+        'obj': org,
+    }
+
+    if request.method == 'POST':
+        if 'password' in request.POST:
+            check = request.user.check_password(request.POST.get('password'))
+            if check:
+                org.delete()
+                messages.success(request, 'Organization was permanently deleted.')
+                return redirect('dashboard:orgs')
+            else:
+                context['error'] = 'Incorrect password.'
+                return render(request, 'dashboard/confirm_deletion.html', context)
+
+    return render(request, 'dashboard/confirm_deletion.html', context)
+
+
+@login_required
 def org_settings(request, id):
-    org = Organization.objects.filter(id=id).first()
+    org = get_object_or_404(Organization, pk=id)
 
     print(org)
 
