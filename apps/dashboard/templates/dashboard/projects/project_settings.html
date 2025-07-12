@@ -1,0 +1,10 @@
+{% extends 'dashboard/_base_dashboard.html' %}
+
+{% block title %}
+    <i class="bi bi-gear me-2"></i>Project Settings: <span class="text-info">{{ project.name }}</span>
+{% endblock title %}
+
+{% block dashboard_content %}
+    {% include 'dashboard/projects/_base_project_form.html' with action='Update' obj_url='projects:project_settings' obj=project title='General' %}
+    <hr>
+{% endblock dashboard_content %}

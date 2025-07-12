@@ -9,7 +9,6 @@ from .forms import OrganizationForm
 
 @login_required
 def create_org(request):
-
     if request.method == 'POST':
         form = OrganizationForm(request.POST)
         if form.is_valid():
@@ -64,13 +63,11 @@ def delete_org_confirm(request, id):
 def org_settings(request, id):
     org = get_object_or_404(Organization, pk=id)
 
-    print(org)
-
     if request.method == 'POST':
         form = OrganizationForm(request.POST, instance=org)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Organization updated.')
+            messages.success(request, 'Organization was updated.')
             return redirect('dashboard:orgs')
     else:
         form = OrganizationForm(instance=org)

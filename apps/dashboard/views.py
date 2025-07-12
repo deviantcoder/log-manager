@@ -22,7 +22,7 @@ def organizations(request):
 
 
 def projects(request):
-    projects = Project.objects.filter(projectmember__user=request.user)
+    projects = Project.objects.filter(projectmember__user=request.user, status=Project.StatusChoices.ACTIVE)
     context = {
         'projects': projects
     }

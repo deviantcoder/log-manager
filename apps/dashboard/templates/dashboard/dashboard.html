@@ -65,7 +65,7 @@
     <hr>
     <h4>Projects</h4>
     {% for project in projects %}
-        {% include 'dashboard/cards/project_card.html' with obj=project %}
+        {% include 'dashboard/cards/project_card.html' with obj=project obj_settings_url='projects:project_settings' obj_id=project.id %}
     {% endfor %}
     <div class="col-md-4">
         <div class="add-org-card org-card h-100 d-flex flex-column border-dash align-items-center justify-content-center">

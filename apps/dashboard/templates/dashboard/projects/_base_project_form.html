@@ -15,8 +15,14 @@
                 {% endif %}
             >
                 {% csrf_token %}
+                {% if form.org %}
                 <div class="mb-3 text-start">
-                    <i class="bi bi-buildings me-2"></i><label class="form-label">Organization name</label>
+                    <i class="bi bi-buildings me-2"></i> {{ form.org|add_label_class:"form-label" }}
+                    {% render_field form.org class="form-select" %}
+                </div>
+                {% endif %}
+                <div class="mb-3 text-start">
+                    <i class="bi bi-folder me-2"></i> {{ form.name|add_label_class:"form-label" }}
                     {% render_field form.name class="form-control" %}
                 </div>
                 <div class="mb-3 text-start">

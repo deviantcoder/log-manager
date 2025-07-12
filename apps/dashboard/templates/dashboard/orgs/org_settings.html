@@ -5,7 +5,7 @@
 {% endblock title %}
 
 {% block dashboard_content %}
-    {% include 'dashboard/orgs/_base_org_form.html' with action='Update' obj_url='orgs:org_settings' obj=org status=True title='General' %}
+    {% include 'dashboard/orgs/_base_org_form.html' with action='Update' obj_url='orgs:org_settings' obj=org title='General' %}
     <hr>
     <div class="d-flex justify-content-center m-3 mt-2">
         <div class="p-4" style="max-width: 900px; width: 100%;">

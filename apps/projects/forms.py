@@ -3,7 +3,7 @@ from django import forms
 from .models import Project
 
 
-class ProjectForm(forms.ModelForm):
+class BaseProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = (
@@ -14,3 +14,12 @@ class ProjectForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'placeholder': 'Enter project name'})
         self.fields['description'].widget.attrs.update({'placeholder': 'Add a description'})
+
+
+class ProjectCreateForm(BaseProjectForm):
+    pass
+
+
+class ProjectEditForm(BaseProjectForm):
+    class Meta(BaseProjectForm.Meta):
+        fields = ('name', 'description')
