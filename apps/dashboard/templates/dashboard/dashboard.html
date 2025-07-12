@@ -46,7 +46,7 @@
 {% block cards %}
     <h4>Organizations</h4>
     {% for org in orgs %}
-        {% include 'dashboard/cards/org_card.html' with obj=org %}
+        {% include 'dashboard/cards/org_card.html' with obj=org obj_settings_url='orgs:org_settings' obj_id=org.id %}
     {% endfor %}
     <div class="col-md-4">
         <div class="add-org-card org-card h-100 d-flex flex-column border-dash align-items-center justify-content-center">
