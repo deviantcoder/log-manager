@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            <form method="POST" action="{% url 'orgs:delete_org_confirm' obj.id %}" class="border rounded-2 bg-blue-gray p-3 mb-4">
+            <form method="POST" action="{{ obj_delete_url }}" class="border rounded-2 bg-blue-gray p-3 mb-4">
                 {% csrf_token %}
                 <div class="mb-3 text-start">
                     <label class="form-label">Password</label>

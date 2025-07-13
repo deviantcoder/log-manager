@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseForbidden
+from django.urls import reverse
 
 from .models import Organization
 from .forms import OrganizationForm
@@ -30,6 +31,8 @@ def delete_org(request, id):
     org = get_object_or_404(Organization, pk=id)
     context = {
         'obj': org,
+        'obj_name': 'organization',
+        'delete_confirm_url': reverse('orgs:delete_org_confirm', kwargs={'id': org.pk}),
     }
     return render(request, 'dashboard/partials/modal_partial.html', context)
 
@@ -43,6 +46,7 @@ def delete_org_confirm(request, id):
     
     context = {
         'obj': org,
+        'obj_delete_url': reverse('orgs:delete_org_confirm', kwargs={'id': org.pk}),
     }
 
     if request.method == 'POST':

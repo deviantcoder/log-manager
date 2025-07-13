@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <span class="modal-title text-white fw-bold">Delete {{ obj.name }}</span>
+    <span class="modal-title text-white fw-bold">Delete <span class="text-info">{{ obj.name }}</span></span>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body" id="modal-body">
@@ -8,5 +8,5 @@
     </div>
 </div>
 <div class="modal-footer">
-    <a href="{% url 'orgs:delete_org_confirm' obj.id %}" class="btn btn-outline-light btn-sm w-100">I want to delete this organization</a>
+    <a href="{{ delete_confirm_url }}" class="btn btn-outline-light btn-sm w-100">I want to delete this {{ obj_name }}</a>
 </div>

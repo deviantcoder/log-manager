@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+from django.urls import reverse
 
 from .models import Project
 from .forms import ProjectCreateForm, ProjectEditForm
@@ -26,6 +28,45 @@ def create_project(request):
     }
 
     return render(request, 'dashboard/projects/project_form.html', context)
+
+
+@login_required
+def delete_project(request, id):
+    project = get_object_or_404(Project, pk=id)
+    print(project)
+    context = {
+        'obj': project,
+        'obj_name': 'project',
+        'delete_confirm_url': reverse('projects:delete_project_confirm', kwargs={'id': project.pk}),
+    }
+    return render(request, 'dashboard/partials/modal_partial.html', context)
+
+
+@login_required
+def delete_project_confirm(request, id):
+    project = get_object_or_404(Project, pk=id)
+
+    if request.user != project.created_by:
+        return HttpResponseForbidden()
+    
+    context = {
+        'obj': project,
+        'obj_delete_url': reverse('projects:delete_project_confirm', kwargs={'id': project.pk}),
+    }
+
+    if request.method == 'POST':
+        if 'password' in request.POST:
+            check = request.user.check_password(request.POST.get('password'))
+            if check:
+                project.delete()
+                messages.success(request, 'Project was permanently deleted.')
+                return redirect('dashboard:projects')
+            else:
+                context['error'] = 'Incorrect password.'
+                return render(request, 'dashboard/confirm_deletion.html', context)
+
+    return render(request, 'dashboard/confirm_deletion.html', context)
+
 
 
 @login_required
