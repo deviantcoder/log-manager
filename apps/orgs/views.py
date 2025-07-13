@@ -20,21 +20,23 @@ def create_org(request):
             return redirect('dashboard:orgs')
     else:
         form = OrganizationForm()
+
     context = {
         'form': form,
     }
+
     return render(request, 'dashboard/orgs/org_form.html', context)
 
 
 @login_required
 def delete_org(request, id):
     org = get_object_or_404(Organization, pk=id)
+    
     context = {
-        'obj': org,
-        'obj_name': 'organization',
-        'delete_confirm_url': reverse('orgs:delete_org_confirm', kwargs={'id': org.pk}),
+        'org': org,
     }
-    return render(request, 'dashboard/partials/modal_partial.html', context)
+
+    return render(request, 'dashboard/orgs/partials/org_delete_partial.html', context)
 
 
 @login_required
@@ -54,10 +56,13 @@ def delete_org_confirm(request, id):
             check = request.user.check_password(request.POST.get('password'))
             if check:
                 org.delete()
+
                 messages.success(request, 'Organization was permanently deleted.')
+
                 return redirect('dashboard:orgs')
             else:
                 context['error'] = 'Incorrect password.'
+
                 return render(request, 'dashboard/confirm_deletion.html', context)
 
     return render(request, 'dashboard/confirm_deletion.html', context)
@@ -71,12 +76,21 @@ def org_settings(request, id):
         form = OrganizationForm(request.POST, instance=org)
         if form.is_valid():
             form.save()
+
             messages.success(request, 'Organization was updated.')
+
             return redirect('dashboard:orgs')
     else:
         form = OrganizationForm(instance=org)
+    
     context = {
         'org': org,
         'form': form,
     }
+    
     return render(request, 'dashboard/orgs/org_settings.html', context)
+
+
+@login_required
+def change_org_status(request, id):
+    pass

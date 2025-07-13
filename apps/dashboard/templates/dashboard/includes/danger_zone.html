@@ -7,7 +7,13 @@
                     <div class="fw-bold">Change {{ obj_name }} status</div>
                     <div class="text-muted small">This {{ obj_name }} is currently {{ project.status }}</div>
                 </div>
-                <button class="btn btn-outline-danger btn-sm">Change status</button>
+                <button
+                    data-bs-toggle="modal"
+                    data-bs-target="#modal"
+                    class="btn btn-outline-danger btn-sm"
+                >
+                    Change status
+                </button>
             </div>
             <hr>
             <div class="d-flex justify-content-between align-items-start mb-3">

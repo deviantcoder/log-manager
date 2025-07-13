@@ -1,0 +1,16 @@
+{% extends 'dashboard/partials/_base_modal_partial.html' %}
+
+{% block modal_header %}
+    <span class="modal-title text-white fw-bold">Delete <span class="text-info">{{ org.name }}</span></span>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+{% endblock modal_header %}
+
+{% block modal_body %}
+    <div class="text-center">
+        <span class="text-white fw-bold fs-5">{{ org.name }}</span>
+    </div>
+{% endblock modal_body %}
+
+{% block modal_footer %}
+    <a href="{% url 'orgs:delete_org_confirm' org.id %}" class="btn btn-outline-light btn-sm w-100">I want to delete this organization</a>
+{% endblock modal_footer %}

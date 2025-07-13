@@ -14,3 +14,9 @@ class OrganizationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'placeholder': 'Enter organization name'})
         self.fields['description'].widget.attrs.update({'placeholder': 'Add a description'})
+
+
+class OrgStatusForm(forms.ModelForm):
+    class Meta:
+        model = Organization
+        fields = ('status',)

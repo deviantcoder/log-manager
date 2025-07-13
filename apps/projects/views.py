@@ -33,13 +33,12 @@ def create_project(request):
 @login_required
 def delete_project(request, id):
     project = get_object_or_404(Project, pk=id)
-    print(project)
+
     context = {
-        'obj': project,
-        'obj_name': 'project',
-        'delete_confirm_url': reverse('projects:delete_project_confirm', kwargs={'id': project.pk}),
+        'project': project,
     }
-    return render(request, 'dashboard/partials/modal_partial.html', context)
+
+    return render(request, 'dashboard/projects/partials/project_delete_partial.html', context)
 
 
 @login_required
@@ -59,10 +58,13 @@ def delete_project_confirm(request, id):
             check = request.user.check_password(request.POST.get('password'))
             if check:
                 project.delete()
+
                 messages.success(request, 'Project was permanently deleted.')
+
                 return redirect('dashboard:projects')
             else:
                 context['error'] = 'Incorrect password.'
+
                 return render(request, 'dashboard/confirm_deletion.html', context)
 
     return render(request, 'dashboard/confirm_deletion.html', context)
@@ -78,7 +80,9 @@ def project_settings(request, id):
         form = ProjectEditForm(request.POST, instance=project)
         if form.is_valid():
             form.save()
+            
             messages.success(request, 'Project was updated.')
+
             return redirect('dashboard:projects')
 
     context = {
