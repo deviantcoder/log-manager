@@ -5,7 +5,7 @@ from django.http import HttpResponseForbidden
 from django.urls import reverse
 
 from .models import Project
-from .forms import ProjectCreateForm, ProjectEditForm
+from .forms import ProjectCreateForm, ProjectEditForm, ProjectStatusForm
 
 
 @login_required
@@ -91,3 +91,24 @@ def project_settings(request, id):
     }
 
     return render(request, 'dashboard/projects/project_settings.html', context)
+
+
+@login_required
+def change_project_status(request, id):
+    project = get_object_or_404(Project, pk=id)
+
+    if request.method == 'POST':
+        form = ProjectStatusForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            messages.warning(request, 'Project status was changed!')
+            return redirect('projects:project_settings', project.id)
+    else:
+        form = ProjectStatusForm()
+
+    context = {
+        'project': project,
+        'form': form,
+    }
+
+    return render(request, 'dashboard/projects/partials/project_status_partial.html', context)

@@ -5,9 +5,15 @@
             <div class="d-flex justify-content-between align-items-start mb-3">
                 <div>
                     <div class="fw-bold">Change {{ obj_name }} status</div>
-                    <div class="text-muted small">This {{ obj_name }} is currently {{ project.status }}</div>
+                    <div class="text-muted small">
+                        This {{ obj_name }} is currently <span class="text-white fw-bold">{{ obj.status }}</span>
+                    </div>
                 </div>
                 <button
+                    hx-get="{% url obj_status_url obj.id %}"
+                    hx-target="#modal-content"
+                    hx-swap="innerHTML"
+                    hx-trigger="click"
                     data-bs-toggle="modal"
                     data-bs-target="#modal"
                     class="btn btn-outline-danger btn-sm"

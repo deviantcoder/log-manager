@@ -1,0 +1,22 @@
+{% extends 'dashboard/partials/_base_modal_partial.html' %}
+{% load widget_tweaks %}
+
+{% block modal_header %}
+    <span class="modal-title text-white fw-bold">Change status for <span class="text-info">{{ org.name }}</span></span>
+{% endblock modal_header %}
+
+{% block modal_body %}
+    <div class="text-center">
+        <form method="POST" action="{% url 'orgs:change_org_status' org.id %}">
+            {% csrf_token %}
+            <div class="mb-3 text-start">
+                {{ form.status|add_label_class:"form-label" }}
+                {% render_field form.status class="form-select" %}
+            </div>
+            <button type="submit" class="btn btn-outline-light btn-sm w-100 mt-4">Change status for this organization</button>
+        </form>
+    </div>
+{% endblock modal_body %}
+
+{% block modal_footer %}
+{% endblock modal_footer %}

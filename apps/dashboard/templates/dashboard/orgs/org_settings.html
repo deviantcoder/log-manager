@@ -7,5 +7,5 @@
 {% block dashboard_content %}
     {% include 'dashboard/orgs/_base_org_form.html' with action='Update' obj_url='orgs:org_settings' obj=org title='General' %}
     <hr>
-    {% include 'dashboard/includes/danger_zone.html' with obj_name='organization' obj_delete_url='orgs:delete_org' obj=org %}
+    {% include 'dashboard/includes/danger_zone.html' with obj_name='organization' obj_delete_url='orgs:delete_org' obj_status_url='orgs:change_org_status' obj=org %}
 {% endblock dashboard_content %}

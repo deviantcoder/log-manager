@@ -8,7 +8,13 @@
                         <p>Some info</p>
                     {% endblock card_info %}
                 </div>
-                <span class="badge bg-secondary">{{ obj.status|capfirst }}</span>
+                {% if obj.status == 'active' %}
+                    <span class="badge bg-success">{{ obj.status|capfirst }}</span>
+                {% elif obj.status == 'inactive' %}
+                    <span class="badge bg-dark-yellow">{{ obj.status|capfirst }}</span>
+                {% else %}
+                    <span class="badge bg-secondary">{{ obj.status|capfirst }}</span>
+                {% endif %}
             </div>
         </div>
         <div class="org-card-footer p-3">

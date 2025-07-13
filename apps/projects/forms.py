@@ -23,3 +23,9 @@ class ProjectCreateForm(BaseProjectForm):
 class ProjectEditForm(BaseProjectForm):
     class Meta(BaseProjectForm.Meta):
         fields = ('name', 'description')
+
+
+class ProjectStatusForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ('status',)

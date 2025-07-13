@@ -5,7 +5,7 @@ from django.http import HttpResponseForbidden
 from django.urls import reverse
 
 from .models import Organization
-from .forms import OrganizationForm
+from .forms import OrganizationForm, OrgStatusForm
 
 
 @login_required
@@ -93,4 +93,20 @@ def org_settings(request, id):
 
 @login_required
 def change_org_status(request, id):
-    pass
+    org = get_object_or_404(Organization, pk=id)
+
+    if request.method == 'POST':
+        form = OrgStatusForm(request.POST, instance=org)
+        if form.is_valid():
+            form.save()
+            messages.warning(request, 'Organization status was changed!')
+            return redirect('orgs:org_settings', org.id)
+    else:
+        form = OrgStatusForm()
+
+    context = {
+        'org': org,
+        'form': form,
+    }
+
+    return render(request, 'dashboard/orgs/partials/org_status_partial.html', context)
