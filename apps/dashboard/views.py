@@ -17,6 +17,11 @@ def dashboard(request):
 
 
 @login_required
+def settings_view(request):
+    return render(request, 'dashboard/settings.html')
+
+
+@login_required
 def organizations(request):
     orgs = Organization.objects.filter(orgmember__user=request.user)
     context = {
