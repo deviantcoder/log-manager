@@ -10,7 +10,7 @@
 
 {% block cards %}
     {% for org in orgs %}
-        {% include 'dashboard/cards/org_card.html' with obj=org obj_settings_url='orgs:org_settings' obj_id=org.id %}
+        {% include 'dashboard/cards/org_card.html' with obj=org obj_settings_url='orgs:org_settings' obj_overview_url='orgs:org_overview' %}
     {% endfor %}
     {% include 'dashboard/create_new.html' with obj_name='Organization' create_obj_url='orgs:create_org' %}
 {% endblock cards %}

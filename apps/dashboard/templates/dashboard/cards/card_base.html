@@ -19,10 +19,18 @@
         </div>
         <div class="org-card-footer p-3">
             <div class="d-flex gap-2">
-                <a href="{{ details_url }}" class="btn btn-outline-primary btn-sm flex-fill">
+                <a
+                    hx-get="{% url obj_overview_url obj.id %}"
+                    hx-target="#modal-content"
+                    hx-swap="innerHTML"
+                    hx-trigger="click"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modal"
+                    class="btn btn-outline-primary btn-sm flex-fill"
+                >
                     <i class="bi bi-eye me-1"></i>View Details
                 </a>
-                {% url obj_settings_url obj_id as settings_url %}
+                {% url obj_settings_url obj.id as settings_url %}
                 <a href="{{ settings_url }}" class="btn btn-outline-secondary btn-sm">
                     <i class="bi bi-gear"></i>
                 </a>

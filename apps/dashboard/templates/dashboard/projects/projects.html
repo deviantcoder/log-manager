@@ -10,7 +10,7 @@
 
 {% block cards %}
     {% for project in projects %}
-        {% include 'dashboard/cards/project_card.html' with obj=project obj_settings_url='projects:project_settings' obj_id=project.id %}
+        {% include 'dashboard/cards/project_card.html' with obj=project obj_settings_url='projects:project_settings' %}
     {% endfor %}
     {% include 'dashboard/create_new.html' with obj_name='Project' create_obj_url='projects:create_project' %}
 {% endblock cards %}

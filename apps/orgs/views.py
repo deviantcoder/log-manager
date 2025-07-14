@@ -110,3 +110,14 @@ def change_org_status(request, id):
     }
 
     return render(request, 'dashboard/orgs/partials/org_status_partial.html', context)
+
+
+@login_required
+def org_overview(request, id):
+    org = get_object_or_404(Organization, pk=id)
+    
+    context = {
+        'org': org,
+    }
+
+    return render(request, 'dashboard/orgs/partials/org_overview_partial.html', context)
