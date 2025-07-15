@@ -53,8 +53,6 @@ class TestOrg(TestCase):
             owner=self.user
         )
 
-        org = Organization.objects.get(name='Test Org')
-
         response = self.client.post(
             reverse('orgs:delete_org_confirm', kwargs={'id': org.pk}),
             data={
@@ -83,6 +81,8 @@ class TestOrg(TestCase):
             },
             follow=True
         )
+
+        org.refresh_from_db()
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(org.status, Organization.StatusChoices.INACTIVE)

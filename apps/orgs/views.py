@@ -102,7 +102,7 @@ def change_org_status(request, id):
             messages.warning(request, 'Organization status was changed!')
             return redirect('orgs:org_settings', org.id)
     else:
-        form = OrgStatusForm()
+        form = OrgStatusForm(instance=org)
 
     context = {
         'org': org,

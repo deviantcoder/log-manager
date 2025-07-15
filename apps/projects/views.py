@@ -104,7 +104,7 @@ def change_project_status(request, id):
             messages.warning(request, 'Project status was changed!')
             return redirect('projects:project_settings', project.id)
     else:
-        form = ProjectStatusForm()
+        form = ProjectStatusForm(instance=project)
 
     context = {
         'project': project,
