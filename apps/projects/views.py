@@ -123,4 +123,3 @@ def project_overview(request, id):
     }
 
     return render(request, 'dashboard/projects/partials/project_overview_partial.html', context)
-
