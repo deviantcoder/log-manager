@@ -112,3 +112,15 @@ def change_project_status(request, id):
     }
 
     return render(request, 'dashboard/projects/partials/project_status_partial.html', context)
+
+
+@login_required
+def project_overview(request, id):
+    project = get_object_or_404(Project, pk=id)
+    
+    context = {
+        'project': project,
+    }
+
+    return render(request, 'dashboard/projects/partials/project_overview_partial.html', context)
+

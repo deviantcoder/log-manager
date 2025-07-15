@@ -46,7 +46,7 @@
 {% block cards %}
     <h4>Organizations</h4>
     {% for org in orgs %}
-        {% include 'dashboard/cards/org_card.html' with obj=org obj_settings_url='orgs:org_settings' %}
+        {% include 'dashboard/cards/org_card.html' with obj=org obj_settings_url='orgs:org_settings' obj_overview_url='orgs:org_overview' %}
     {% endfor %}
     <div class="col-md-4">
         <div class="add-org-card org-card h-100 d-flex flex-column border-dash align-items-center justify-content-center">
@@ -65,7 +65,7 @@
     <hr>
     <h4>Projects</h4>
     {% for project in projects %}
-        {% include 'dashboard/cards/project_card.html' with obj=project obj_settings_url='projects:project_settings' %}
+        {% include 'dashboard/cards/project_card.html' with obj=project obj_settings_url='projects:project_settings' obj_overview_url='projects:project_overview' %}
     {% endfor %}
     <div class="col-md-4">
         <div class="add-org-card org-card h-100 d-flex flex-column border-dash align-items-center justify-content-center">

@@ -1,0 +1,24 @@
+{% extends "dashboard/partials/_base_modal_partial.html" %}
+
+{% block modal_header %}
+<h5 class="modal-title">{{ project.name }}</h5>
+{% endblock modal_header %}
+
+{% block modal_body %}
+<ul class="list-unstyled mb-0">
+    <li><strong>Status:</strong> <span class="badge bg-secondary">{{ project.status|capfirst }}</span></li>
+    <li><strong>Created by:</strong> {{ project.created_by|default:project.created_by.username }}</li>
+    <li><strong>Description:</strong>
+        <p class="text-muted mt-1">{{ project.description|default:"No description provided." }}</p>
+    </li>
+    <li><strong>Created:</strong> {{ project.created|date:"M d, Y H:i" }}</li>
+    <li><strong>Updated:</strong> {{ project.updated|date:"M d, Y H:i" }}</li>
+</ul>
+{% endblock modal_body %}
+
+{% block modal_footer %}
+<div class="d-flex justify-content-between gap-2 w-100">
+    <a href="" class="btn btn-outline-success btn-sm">View organization</a>
+    <a href="{% url 'projects:project_settings' project.id %}" class="btn btn-outline-primary btn-sm">Open Settings</a>
+</div>
+{% endblock modal_footer %}
