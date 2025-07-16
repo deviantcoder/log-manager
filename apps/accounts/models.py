@@ -53,4 +53,4 @@ class User(AbstractUser):
     def image_or_default(self):
         if self.image:
             return self.image.url
-        return 'static/img/def.png'
+        return '/static/img/def.png'

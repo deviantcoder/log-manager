@@ -13,6 +13,22 @@
     </li>
     <li><strong>Created:</strong> {{ project.created|date:"M d, Y H:i" }}</li>
     <li><strong>Updated:</strong> {{ project.updated|date:"M d, Y H:i" }}</li>
+    <li class="mt-3"><strong>Members:</strong>
+        <div class="d-flex align-items-center mt-2">
+            {% for member in project.projectmember_set.all|slice:5 %}
+                <div class="position-relative" style="z-index: {{ forloop.revcounter }}; {% if not forloop.first %}margin-left: -12px;{% endif %}">
+                    <img
+                        src="{{ member.user.image_or_default }}"
+                        alt="{{ member.user.username }}"
+                        class="rounded-circle border border-{% if member.user == user %}success{% else %}white{% endif %} border-2"
+                        style="width: 42px; height: 42px; object-fit: cover;">
+                </div>
+            {% endfor %}
+            {% if org.orgmember_set.all.count > 5 %}
+                <span class="ms-2 text-muted fw-bold">and more...</span>
+            {% endif %}
+        </div>
+    </li>
 </ul>
 {% endblock modal_body %}
 

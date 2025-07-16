@@ -26,13 +26,7 @@
             {% else %}
                 <div class="dropdown ms-3">
                     <button class="btn dropdown-toggle d-flex align-items-center p-0" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="profile-avatar-small rounded-circle border me-1" 
-                            {% if user.image %}
-                                src="{{ user.image.url }}"
-                            {% else %}
-                                src="{% static 'img/def.png' %}"    
-                            {% endif %}  
-                            alt="">
+                            <img class="profile-avatar-small rounded-circle border me-1" src="{{ user.image_or_default }}" alt="">
                             {{ user.username }}
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
