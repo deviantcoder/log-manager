@@ -126,5 +126,11 @@ def project_overview(request, id):
 
 
 @login_required
-def project_details(request, slug):
-    pass
+def project_details(request, id):
+    project = get_object_or_404(Project, pk=id)
+
+    context = {
+        'project': project,
+    }
+
+    return render(request, 'dashboard/projects/project_details.html', context)
