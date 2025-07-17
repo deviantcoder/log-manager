@@ -10,4 +10,5 @@ urlpatterns = [
     path('delete/<str:id>/confirm/', views.delete_org_confirm, name='delete_org_confirm'),
     path('change-status/<str:id>/', views.change_org_status, name='change_org_status'),
     path('overview/<str:id>/', views.org_overview, name='org_overview'),
+    path('<slug:slug>/', views.org_details, name='org_details'),
 ]

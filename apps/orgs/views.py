@@ -6,6 +6,7 @@ from django.urls import reverse
 
 from .models import Organization
 from .forms import OrganizationForm, OrgStatusForm
+from apps.projects.models import Project
 
 
 @login_required
@@ -121,3 +122,18 @@ def org_overview(request, id):
     }
 
     return render(request, 'dashboard/orgs/partials/org_overview_partial.html', context)
+
+
+@login_required
+def org_details(request, slug):
+    org = get_object_or_404(Organization, slug=slug)
+    projects = org.projects.all()
+    members = org.orgmember_set.all()
+
+    context = {
+        'org': org,
+        'projects': projects,
+        'members': members,
+    }
+
+    return render(request, 'dashboard/orgs/org_details.html', context)

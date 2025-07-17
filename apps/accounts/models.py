@@ -54,3 +54,9 @@ class User(AbstractUser):
         if self.image:
             return self.image.url
         return '/static/img/def.png'
+
+    @property
+    def full_name_or_username(self):
+        if self.first_name or self.last_name:
+            return f'{self.first_name} {self.last_name}'.strip()
+        return self.username

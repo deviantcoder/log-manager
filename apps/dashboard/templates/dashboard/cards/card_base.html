@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
-                    <h5 class="fw-bold">{{ obj.name }}</h5>
+                    <a href="{% url obj_details_url obj.slug %}"><h5 class="fw-bold">{{ obj.name }}</h5></a>
                     {% block card_info %}
                         <p>Some info</p>
                     {% endblock card_info %}
