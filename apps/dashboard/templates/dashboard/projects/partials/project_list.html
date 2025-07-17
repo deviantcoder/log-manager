@@ -1,0 +1,3 @@
+{% for project in projects %}
+    {% include 'dashboard/cards/project_card.html' with obj=project obj_details_url='projects:project_details' obj_settings_url='projects:project_settings' obj_overview_url='projects:project_overview' %}
+{% endfor %}

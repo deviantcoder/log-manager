@@ -9,8 +9,6 @@
 {% endblock description %}
 
 {% block cards %}
-    {% for project in projects %}
-        {% include 'dashboard/cards/project_card.html' with obj=project obj_details_url='projects:project_details' obj_settings_url='projects:project_settings' obj_overview_url='projects:project_overview' %}
-    {% endfor %}
+    {% include 'dashboard/projects/partials/project_list.html' %}
     {% include 'dashboard/create_new.html' with obj_name='Project' create_obj_url='projects:create_project' %}
 {% endblock cards %}
