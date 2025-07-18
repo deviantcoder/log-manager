@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
 
-from .utils import compress_image
+from utils.images import compress_image
 
 
 User = get_user_model()

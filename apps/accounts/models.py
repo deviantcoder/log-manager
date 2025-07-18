@@ -7,17 +7,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import FileExtensionValidator
 
-from .utils import compress_image
-
-
-ALLOWED_EXTENSIONS = ('jpg', 'jpeg', 'png', 'gif', 'webp')
+from utils.images import upload_to as base_upload_to, ALLOWED_EXTENSIONS
 
 
 def upload_to(instance, filename):
-    ext = os.path.splitext(filename)[-1].lower()
-    new_filename = shortuuid.uuid()[:8]
-
-    return f'accounts/{str(instance.public_id)[:8]}/{new_filename}{ext}'
+    return base_upload_to(instance, filename, base_dir='accounts')
 
 
 class User(AbstractUser):
