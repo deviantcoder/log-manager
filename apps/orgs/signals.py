@@ -1,6 +1,8 @@
+import os
+import shutil
 import logging
 
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, post_delete
 from django.dispatch import receiver
 
 from .models import Organization, OrgMember
@@ -38,3 +40,13 @@ def compress_org_image(sender, instance, **kwargs):
         instance.image = compress_image(instance.image)
     except Exception as e:
         logging.warning(f'Image compression failed: {e}')
+
+
+@receiver(post_delete, sender=Organization)
+def delete_org_media(sender, instance, **kwargs):
+    try:
+        path = f'media/orgs/{str(instance.public_id)[:8]}'
+        if os.path.exists(path):
+            shutil.rmtree(path)
+    except Exception as e:
+        logger.warning(f'User media deletion failed: {e}')
