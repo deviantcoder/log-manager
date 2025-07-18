@@ -59,6 +59,12 @@ class Organization(models.Model):
                 self.slug = f'{base_slug}-{str(uuid())}'[:50]
         super().save(*args, **kwargs)
 
+    @property
+    def image_or_default(self):
+        if self.image:
+            return self.image.url
+        return '/static/img/default_org_logo.png'
+
 
 class OrgMember(models.Model):
     class ROLE_CHOICES(models.TextChoices):

@@ -1,7 +1,11 @@
 {% extends "dashboard/partials/_base_modal_partial.html" %}
 
 {% block modal_header %}
-<h5 class="modal-title">{{ org.name }}</h5>
+<div class="d-flex align-items-center">
+    <img src="{{ org.image_or_default }}" alt="{{ org.name }} Logo" class="rounded-circle border border-white border-2 me-2"
+        style="width: 42px; height: 42px; object-fit: cover;">
+    <h5 class="modal-title">{{ org.name }}</h5>
+</div>
 {% endblock modal_header %}
 
 {% block modal_body %}

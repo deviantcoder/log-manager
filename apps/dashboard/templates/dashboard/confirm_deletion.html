@@ -10,7 +10,7 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-center">
-                        <img src="{{ user.image.url }}" class="profile-avatar-md rounded-circle border me-3" alt="User Image">
+                        <img src="{{ user.image_or_default }}" class="profile-avatar-md rounded-circle border me-3" alt="User Image">
                         <span class="me-1">Signed in as</span><span class="text-white fw-bold">@{{ user.username }}</span>
                     </div>
                 </div>
