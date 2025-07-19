@@ -128,7 +128,7 @@ def org_overview(request, id):
 def org_details(request, slug):
     org = get_object_or_404(Organization, slug=slug)
     projects = org.projects.all()
-    members = org.orgmember_set.all()
+    members = org.members.all()
 
     context = {
         'org': org,

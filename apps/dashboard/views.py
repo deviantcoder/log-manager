@@ -7,8 +7,8 @@ from apps.orgs.models import Organization
 
 @login_required
 def dashboard(request):
-    orgs = Organization.objects.filter(orgmember__user=request.user, status=Organization.StatusChoices.ACTIVE)
-    projects = Project.objects.filter(projectmember__user=request.user, status=Project.StatusChoices.ACTIVE)
+    orgs = Organization.objects.filter(members__user=request.user, status=Organization.StatusChoices.ACTIVE)
+    projects = Project.objects.filter(members__user=request.user, status=Project.StatusChoices.ACTIVE)
     context = {
         'orgs': orgs[:2],
         'projects': projects[:2],
@@ -23,7 +23,7 @@ def settings_view(request):
 
 @login_required
 def organizations(request):
-    orgs = Organization.objects.filter(orgmember__user=request.user)
+    orgs = Organization.objects.filter(members__user=request.user)
     context = {
         'orgs': orgs,
     }
@@ -32,7 +32,7 @@ def organizations(request):
 
 @login_required
 def projects(request):
-    projects = Project.objects.filter(projectmember__user=request.user)
+    projects = Project.objects.filter(members__user=request.user)
     context = {
         'projects': projects
     }

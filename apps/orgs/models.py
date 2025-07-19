@@ -72,7 +72,7 @@ class OrgMember(models.Model):
         MEMBER = ('member', 'Member')
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    org = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    org = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='members')
     role = models.CharField(
         max_length=10, choices=ROLE_CHOICES.choices, default=ROLE_CHOICES.MEMBER
     )

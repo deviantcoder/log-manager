@@ -40,7 +40,7 @@ class ProjectMember(models.Model):
         MEMBER = ('member', 'Member')
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='members')
     role = models.CharField(
         max_length=10, choices=ROLE_CHOICES.choices, default=ROLE_CHOICES.MEMBER
     )

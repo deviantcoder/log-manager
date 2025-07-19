@@ -49,4 +49,4 @@ def delete_org_media(sender, instance, **kwargs):
         if os.path.exists(path):
             shutil.rmtree(path)
     except Exception as e:
-        logger.warning(f'User media deletion failed: {e}')
+        logger.warning(f'Org media deletion failed: {e}')
