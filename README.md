@@ -33,7 +33,7 @@ Description
 ## Getting Started
 
 ```bash
-git clone https://github.com/yourusername/log-manager.git
+git clone https://github.com/deviantcoder/log-manager.git
 cd log-manager
 
 python -m venv venv
