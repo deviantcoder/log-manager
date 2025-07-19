@@ -81,3 +81,16 @@
     display: flex !important;
     pointer-events: auto;
 }
+
+.card.active {
+    border-width: 1px;
+    border-color: #1a9b9b;
+}
+.card.inactive {
+    border-width: 1px;
+    border-color: #858f1c;
+}
+.card.archived {
+    border-width: 1px;
+    border-color: #807f85;
+}
