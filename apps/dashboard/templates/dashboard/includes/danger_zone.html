@@ -6,7 +6,7 @@
                 <div>
                     <div class="fw-bold">Change {{ obj_name }} status</div>
                     <div class="text-muted small">
-                        This {{ obj_name }} is currently <span class="text-white fw-bold">{{ obj.status }}</span>
+                        This {{ obj_name }} is currently {% include 'dashboard/partials/obj_status.html' %}
                     </div>
                 </div>
                 <button

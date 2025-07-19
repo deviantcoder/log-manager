@@ -21,7 +21,9 @@
             {% endblock dashboard_content %}
             {% block stats %}
             {% endblock stats %}
-            <div class="row g-4">
+            {% block filters %}
+            {% endblock filters %}
+            <div class="row g-4" id="dashboard_content">
                 {% block cards %}
                 {% endblock cards %}
             </div>

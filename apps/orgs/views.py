@@ -6,7 +6,25 @@ from django.urls import reverse
 
 from .models import Organization
 from .forms import OrganizationForm, OrgStatusForm
-from apps.projects.models import Project
+from .filters import OrgFilter
+
+
+@login_required
+def orgs_list(request):
+    orgs_filter = OrgFilter(
+        request.GET,
+        queryset=Organization.objects.filter(members__user=request.user)
+    )
+
+    context = {
+        'orgs': orgs_filter.qs,
+        'filter': orgs_filter,
+    }
+
+    if request.htmx:
+        return render(request, 'dashboard/orgs/partials/org_list.html', context={'orgs': orgs_filter.qs})
+
+    return render(request, 'dashboard/orgs/orgs.html', context)
 
 
 @login_required
@@ -18,7 +36,7 @@ def create_org(request):
             org.owner = request.user
             org.save()
             messages.success(request, 'Organization created.')
-            return redirect('dashboard:orgs')
+            return redirect('orgs:orgs_list')
     else:
         form = OrganizationForm()
 
@@ -101,7 +119,7 @@ def change_org_status(request, id):
         if form.is_valid():
             form.save()
             messages.warning(request, 'Organization status was changed!')
-            return redirect('orgs:org_settings', org.id)
+            return redirect(request.META.get('HTTP_REFERER'))
     else:
         form = OrgStatusForm(instance=org)
 

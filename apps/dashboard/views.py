@@ -2,7 +2,9 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from apps.projects.models import Project
+
 from apps.orgs.models import Organization
+from apps.orgs.filters import OrgFilter
 
 
 @login_required
@@ -19,15 +21,6 @@ def dashboard(request):
 @login_required
 def settings_view(request):
     return render(request, 'dashboard/settings.html')
-
-
-@login_required
-def organizations(request):
-    orgs = Organization.objects.filter(members__user=request.user)
-    context = {
-        'orgs': orgs,
-    }
-    return render(request, 'dashboard/orgs/orgs.html', context)
 
 
 @login_required

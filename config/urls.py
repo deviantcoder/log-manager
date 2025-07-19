@@ -16,8 +16,8 @@ urlpatterns = [
     path('accounts/social/', include('social_django.urls', namespace='social')),
     
     path('dashboard/', include('apps.dashboard.urls')),
-    path('organizations/', include('apps.orgs.urls')),
-    path('projects/', include('apps.projects.urls')),
+    path('dashboard/organizations/', include('apps.orgs.urls')),
+    path('dashboard/projects/', include('apps.projects.urls')),
 
     # password reset
     path(

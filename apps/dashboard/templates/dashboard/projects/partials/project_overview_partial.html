@@ -6,7 +6,7 @@
 
 {% block modal_body %}
 <ul class="list-unstyled mb-0">
-    <li><strong>Status:</strong> <span class="badge bg-secondary">{{ project.status|capfirst }}</span></li>
+    <li><strong>Status:</strong> {% include 'dashboard/partials/obj_status.html' with obj=project %}</li>
     <li><strong>Created by:</strong> {{ project.created_by|default:project.created_by.username }}</li>
     <li><strong>Description:</strong>
         <p class="text-muted mt-1">{{ project.description|default:"No description provided." }}</p>

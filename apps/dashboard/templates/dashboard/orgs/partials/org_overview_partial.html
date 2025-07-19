@@ -10,7 +10,7 @@
 
 {% block modal_body %}
 <ul class="list-unstyled mb-0">
-    <li><strong>Status:</strong> <span class="badge bg-secondary">{{ org.status|capfirst }}</span></li>
+    <li><strong>Status:</strong> {% include 'dashboard/partials/obj_status.html' with obj=org %}</li>
     <li><strong>Owner:</strong> {{ org.owner.get_full_name|default:org.owner.username }}</li>
     <li><strong>Description:</strong>
         <p class="text-muted mt-1">{{ org.description|default:"No description provided." }}</p>

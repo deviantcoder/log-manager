@@ -20,13 +20,7 @@
                                     <h1 class="h3 mb-1">{{ project.name }}</h1>
                                     <p class="text-muted mb-2">{{ project.description }}</p>
                                     <div class="d-flex flex-wrap gap-2">
-                                        {% if project.status == 'active' %}
-                                            <span class="badge bg-success">{{ project.status|capfirst }}</span>
-                                        {% elif project.status == 'inactive' %}
-                                            <span class="badge bg-dark-yellow">{{ project.status|capfirst }}</span>
-                                        {% else %}
-                                            <span class="badge bg-secondary">{{ project.status|capfirst }}</span>
-                                        {% endif %}
+                                        {% include 'dashboard/partials/obj_status.html' with obj=project %}
                                     </div>
                                 </div>
                             </div>

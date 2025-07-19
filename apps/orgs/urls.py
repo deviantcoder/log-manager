@@ -4,6 +4,7 @@ from . import views
 app_name = 'orgs'
 
 urlpatterns = [
+    path('', views.orgs_list, name='orgs_list'),
     path('create/', views.create_org, name='create_org'),
     path('settings/<slug:slug>/', views.org_settings, name='org_settings'),
     path('delete/<str:id>/', views.delete_org, name='delete_org'),
