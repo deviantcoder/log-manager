@@ -1,3 +1,5 @@
 {% for org in orgs %}
-    {% include 'dashboard/cards/org_card.html' with obj=org obj_details_url='orgs:org_details' obj_settings_url='orgs:org_settings' obj_overview_url='orgs:org_overview' %}
+    {% url 'orgs:org_details' org.slug as details_url %}
+    {% url 'orgs:org_settings' org.slug as settings_url %}
+    {% include 'dashboard/cards/org_card.html' with obj=org obj_details_url=details_url obj_settings_url=settings_url obj_overview_url='orgs:org_overview' %}
 {% endfor %}

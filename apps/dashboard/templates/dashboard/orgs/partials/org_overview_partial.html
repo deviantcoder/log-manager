@@ -40,6 +40,6 @@
 {% block modal_footer %}
 <div class="d-flex justify-content-between gap-2 w-100">
     <a href="{% url 'orgs:org_details' org.slug %}" class="btn btn-outline-success btn-sm">View organization</a>
-    <a href="{% url 'orgs:org_settings' org.id %}" class="btn btn-outline-primary btn-sm">Open Settings</a>
+    <a href="{% url 'orgs:org_settings' org.slug %}" class="btn btn-outline-primary btn-sm">Open Settings</a>
 </div>
 {% endblock modal_footer %}

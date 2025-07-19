@@ -70,8 +70,8 @@ def delete_org_confirm(request, id):
 
 
 @login_required
-def org_settings(request, id):
-    org = get_object_or_404(Organization, pk=id)
+def org_settings(request, slug):
+    org = get_object_or_404(Organization, slug=slug)
 
     if request.method == 'POST':
         form = OrganizationForm(request.POST, instance=org)
