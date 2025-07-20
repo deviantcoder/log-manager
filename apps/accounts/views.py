@@ -1,3 +1,5 @@
+import re
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -87,3 +89,37 @@ def account_settings_view(request):
 
     context = {}
     return render(request, 'accounts/account_settings.html', context)
+
+
+@login_required
+def check_username(request):
+    LOWER_LIMIT = 5
+    UPPER_LIMIT = 25
+
+    pattern = r'^[a-zA-Z0-9_]+$'
+
+    username = request.GET.get('username', '').strip()
+
+    context = {
+        'available': True,
+        'msg': '',
+    }
+
+    if username:
+        if len(username) < LOWER_LIMIT:
+            context['available'] = False
+            context['msg'] = 'Too short (min 5 characters)'
+
+        if len(username) > UPPER_LIMIT:
+            context['available'] = False
+            context['msg'] = 'Too long (max 25 characters)'
+
+        if not re.match(pattern, username):
+            context['available'] = False
+            context['msg'] = 'Invalid characters. Only letters, digits and underscores allowed.'
+
+        if User.objects.filter(username=username).exclude(pk=request.user.pk).exists():
+            context['available'] = False
+            context['msg'] = 'Username is already taken'
+
+    return render(request, 'accounts/partials/check_username.html', context)
