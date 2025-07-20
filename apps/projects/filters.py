@@ -13,4 +13,4 @@ class ProjectFilter(django_filters.FilterSet):
 
     class Meta:
         model = Project
-        firlds = ('status',)
+        fields = ('status',)

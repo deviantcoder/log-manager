@@ -6,15 +6,23 @@ from django.urls import reverse
 
 from .models import Project
 from .forms import ProjectCreateForm, ProjectEditForm, ProjectStatusForm
+from .filters import ProjectFilter
 
 
 @login_required
 def projects_list(request):
-    projects = Project.objects.filter(members__user=request.user)
+    projects_filter = ProjectFilter(
+        request.GET,
+        queryset=Project.objects.filter(members__user=request.user)
+    )
 
     context = {
-        'projects': projects
+        'projects': projects_filter.qs,
+        'filter': projects_filter,
     }
+
+    if request.htmx:
+        return render(request, 'dashboard/projects/partials/project_list.html', context={'projects': projects_filter.qs})
 
     return render(request, 'dashboard/projects/projects.html', context)
 
