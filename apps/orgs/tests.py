@@ -9,7 +9,7 @@ from .models import Organization
 User = get_user_model()
 
 
-class TestOrg(TestCase):
+class OrgTests(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(
@@ -18,12 +18,22 @@ class TestOrg(TestCase):
             password='testpass123'
         )
     
+    def create_org(self, name='Test Org', description='Some text...', status=Organization.StatusChoices.ACTIVE):
+        try:
+            org = Organization.objects.create(
+                name=name,
+                description=description,
+                owner=self.user,
+                status=status,
+            )
+
+            return org
+        except Exception as e:
+            print('Error during org creation: ', e)
+            raise
+
     def test_create_org(self):
-        org = Organization.objects.create(
-            name='Test Org',
-            description='Some text...',
-            owner=self.user
-        )
+        org = self.create_org()
         
         self.assertEqual(org.name, 'Test Org')
         self.assertEqual(org.owner, self.user)
@@ -48,10 +58,7 @@ class TestOrg(TestCase):
     def test_delete_org_view(self):
         self.client.force_login(self.user)
 
-        org = Organization.objects.create(
-            name='Test Org',
-            owner=self.user
-        )
+        org = self.create_org()
 
         response = self.client.post(
             reverse('orgs:delete_org_confirm', kwargs={'id': org.pk}),
@@ -69,10 +76,7 @@ class TestOrg(TestCase):
     def test_change_org_status(self):
         self.client.force_login(self.user)
 
-        org = Organization.objects.create(
-            name='Test Org',
-            owner=self.user
-        )
+        org = self.create_org()
 
         response = self.client.post(
             reverse('orgs:change_org_status', kwargs={'id': org.pk}),
@@ -86,3 +90,46 @@ class TestOrg(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(org.status, Organization.StatusChoices.INACTIVE)
+
+    def test_orgs_with_same_name_have_different_slugs(self):
+        org1 = self.create_org()
+        org2 = self.create_org()
+
+        self.assertNotEqual(org1.slug, org2.slug)
+
+    def test_org_status_filter(self):
+        self.client.force_login(self.user)
+
+        org = self.create_org(status=Organization.StatusChoices.ACTIVE)
+        org = self.create_org(status=Organization.StatusChoices.INACTIVE)
+        org = self.create_org(status=Organization.StatusChoices.ARCHIVED)
+
+        # active check
+
+        GET_PARAMS = {'org_status': Organization.StatusChoices.ACTIVE}
+        response = self.client.get(reverse('orgs:orgs_list'), GET_PARAMS)
+
+        qs = response.context.get('filter').qs
+
+        for org in qs:
+            self.assertEqual(org.status, Organization.StatusChoices.ACTIVE)
+
+        # inactive check
+
+        GET_PARAMS = {'org_status': Organization.StatusChoices.INACTIVE}
+        response = self.client.get(reverse('orgs:orgs_list'), GET_PARAMS)
+
+        qs = response.context.get('filter').qs
+
+        for org in qs:
+            self.assertEqual(org.status, Organization.StatusChoices.INACTIVE)
+
+        # archived check
+
+        GET_PARAMS = {'org_status': Organization.StatusChoices.ARCHIVED}
+        response = self.client.get(reverse('orgs:orgs_list'), GET_PARAMS)
+
+        qs = response.context.get('filter').qs
+
+        for org in qs:
+            self.assertEqual(org.status, Organization.StatusChoices.ARCHIVED)

@@ -78,7 +78,7 @@ def delete_org_confirm(request, id):
 
                 messages.success(request, 'Organization was permanently deleted.')
 
-                return redirect('dashboard:orgs')
+                return redirect('orgs:orgs_list')
             else:
                 context['error'] = 'Incorrect password.'
 
@@ -119,7 +119,7 @@ def change_org_status(request, id):
         if form.is_valid():
             form.save()
             messages.warning(request, 'Organization status was changed!')
-            return redirect(request.META.get('HTTP_REFERER'))
+            return redirect(request.META.get('HTTP_REFERER') or 'orgs:orgs_list')
     else:
         form = OrgStatusForm(instance=org)
 
