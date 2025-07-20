@@ -1,5 +1,8 @@
+from shortuuid import uuid
+
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.text import slugify
 
 from apps.orgs.models import Organization
 
@@ -32,6 +35,15 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        if self._state.adding:
+            base_slug = slugify(self.name)
+            self.slug = base_slug
+
+            if Project.objects.filter(org=self.org, slug__iexact=base_slug).exists():
+                self.slug = f'{base_slug}-{str(uuid())}'[:50]
+        super().save(*args, **kwargs)
 
 
 class ProjectMember(models.Model):

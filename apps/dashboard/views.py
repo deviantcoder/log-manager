@@ -21,12 +21,3 @@ def dashboard(request):
 @login_required
 def settings_view(request):
     return render(request, 'dashboard/settings.html')
-
-
-@login_required
-def projects(request):
-    projects = Project.objects.filter(members__user=request.user)
-    context = {
-        'projects': projects
-    }
-    return render(request, 'dashboard/projects/projects.html', context)

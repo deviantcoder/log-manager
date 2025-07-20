@@ -8,10 +8,10 @@
         {% endif %}
         <div class="text-center">
             <form method="POST" 
-                {% if obj %}
-                    action="{% url obj_url obj.id %}"
+                {% if project %}
+                    action="{% url project_url project.org.slug project.slug %}"
                 {% else %}
-                    action="{% url obj_url %}"
+                    action="{% url project_url %}"
                 {% endif %}
             >
                 {% csrf_token %}

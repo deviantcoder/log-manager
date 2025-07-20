@@ -26,7 +26,7 @@
                             </div>
                             <div class="text-end">
                                 <div class="btn-group">
-                                    <a href="{% url 'projects:project_settings' project.id %}" class="btn btn-outline-primary btn-sm">
+                                    <a href="{% url 'projects:project_settings' project.org.slug project.slug %}" class="btn btn-outline-primary btn-sm">
                                         <i class="bi bi-gear"></i> Settings
                                     </a>
                                     <a href="" class="btn btn-primary btn-sm">

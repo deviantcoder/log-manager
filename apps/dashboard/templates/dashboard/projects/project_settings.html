@@ -5,7 +5,7 @@
 {% endblock title %}
 
 {% block dashboard_content %}
-    {% include 'dashboard/projects/_base_project_form.html' with action='Update' obj_url='projects:project_settings' obj=project title='General' %}
+    {% include 'dashboard/projects/_base_project_form.html' with action='Update' project_url='projects:project_settings' title='General' %}
     <hr>
     {% include 'dashboard/includes/danger_zone.html' with obj_name='project' obj_delete_url='projects:delete_project' obj_status_url='projects:change_project_status' obj=project %}
 {% endblock dashboard_content %}

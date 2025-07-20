@@ -11,5 +11,5 @@
 {% endblock modal_body %}
 
 {% block modal_footer %}
-    <a href="{% url 'projects:delete_project_confirm' project.id %}" class="btn btn-outline-light btn-sm w-100">I want to delete this project</a>
+    <a href="{% url 'projects:delete_project_confirm' project.org.slug project.slug %}" class="btn btn-outline-light btn-sm w-100">I want to delete this project</a>
 {% endblock modal_footer %}

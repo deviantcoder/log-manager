@@ -1,5 +1,5 @@
 {% for project in projects %}
-    {% url 'projects:project_details' project.id as details_url %}
-    {% url 'projects:project_settings' project.id as settings_url %}
+    {% url 'projects:project_details' project.org.slug project.slug as details_url %}
+    {% url 'projects:project_settings' project.org.slug project.slug as settings_url %}
     {% include 'dashboard/cards/project_card.html' with obj=project obj_details_url=details_url obj_settings_url=settings_url obj_overview_url='projects:project_overview' %}
 {% endfor %}

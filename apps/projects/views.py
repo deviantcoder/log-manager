@@ -9,6 +9,17 @@ from .forms import ProjectCreateForm, ProjectEditForm, ProjectStatusForm
 
 
 @login_required
+def projects_list(request):
+    projects = Project.objects.filter(members__user=request.user)
+
+    context = {
+        'projects': projects
+    }
+
+    return render(request, 'dashboard/projects/projects.html', context)
+
+
+@login_required
 def create_project(request):
     if request.method == 'POST':
         form = ProjectCreateForm(request.POST)
@@ -19,7 +30,7 @@ def create_project(request):
 
             messages.success(request, 'Project created.')
 
-            return redirect('dashboard:projects')
+            return redirect('projects:projects_list')
     else:
         form = ProjectCreateForm()
 
@@ -42,15 +53,15 @@ def delete_project(request, id):
 
 
 @login_required
-def delete_project_confirm(request, id):
-    project = get_object_or_404(Project, pk=id)
+def delete_project_confirm(request, org_slug, project_slug):
+    project = get_object_or_404(Project, org__slug=org_slug, slug=project_slug)
 
     if request.user != project.created_by:
         return HttpResponseForbidden()
     
     context = {
         'obj': project,
-        'obj_delete_url': reverse('projects:delete_project_confirm', kwargs={'id': project.pk}),
+        'obj_delete_url': reverse('projects:delete_project_confirm', kwargs={'org_slug': project.org.slug, 'project_slug': project.slug}),
     }
 
     if request.method == 'POST':
@@ -61,7 +72,7 @@ def delete_project_confirm(request, id):
 
                 messages.success(request, 'Project was permanently deleted.')
 
-                return redirect('dashboard:projects')
+                return redirect('projects:projects_list')
             else:
                 context['error'] = 'Incorrect password.'
 
@@ -72,8 +83,8 @@ def delete_project_confirm(request, id):
 
 
 @login_required
-def project_settings(request, id):
-    project = get_object_or_404(Project, pk=id)
+def project_settings(request, org_slug, project_slug):
+    project = get_object_or_404(Project, org__slug=org_slug, slug=project_slug)
     form = ProjectEditForm(instance=project)
 
     if request.method == 'POST':
@@ -83,7 +94,7 @@ def project_settings(request, id):
             
             messages.success(request, 'Project was updated.')
 
-            return redirect('dashboard:projects')
+            return redirect('projects:projects_list')
 
     context = {
         'form': form,
@@ -102,7 +113,7 @@ def change_project_status(request, id):
         if form.is_valid():
             form.save()
             messages.warning(request, 'Project status was changed!')
-            return redirect('projects:project_settings', project.id)
+            return redirect(request.META.get('HTTP_REFERER') or 'projects:projects_list')
     else:
         form = ProjectStatusForm(instance=project)
 
@@ -126,8 +137,8 @@ def project_overview(request, id):
 
 
 @login_required
-def project_details(request, id):
-    project = get_object_or_404(Project, pk=id)
+def project_details(request, org_slug, project_slug):
+    project = get_object_or_404(Project, org__slug=org_slug, slug=project_slug)
 
     context = {
         'project': project,

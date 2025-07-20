@@ -17,7 +17,7 @@ urlpatterns = [
     
     path('dashboard/', include('apps.dashboard.urls')),
     path('dashboard/organizations/', include('apps.orgs.urls')),
-    path('dashboard/projects/', include('apps.projects.urls')),
+    path('dashboard/', include('apps.projects.urls')),
 
     # password reset
     path(
