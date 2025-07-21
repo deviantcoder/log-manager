@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, get_user_model
 from django.views import generic
 from django.contrib import messages
+from django.utils.http import urlsafe_base64_decode
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 from .forms import LoginForm, SignupForm, UsernameUpdateForm
 
@@ -53,8 +55,12 @@ class SignupUserView(generic.CreateView):
         )
         
         if user is not None:
-            login(self.request, user)
-            messages.success(self.request, 'Signed up.')
+            # login(self.request, user)
+            # messages.success(self.request, 'Signed up.')
+            return render(
+                self.request,
+                'email_verification/verify_email_sent.html'
+            )
         
         return response
     
@@ -121,5 +127,38 @@ def check_username(request):
         if User.objects.filter(username=username).exclude(pk=request.user.pk).exists():
             context['available'] = False
             context['msg'] = 'Username is already taken'
+    else:
+        context['available'] = False
+        context['msg'] = 'Username cannot be empty'
 
     return render(request, 'accounts/partials/check_username.html', context)
+
+
+def verify_email(request, uidb64, token):
+    if request.user.is_authenticated and request.user.email_verified:
+        return redirect('/')
+
+    token_generator = PasswordResetTokenGenerator()
+
+    try:
+        public_id_bytes = urlsafe_base64_decode(uidb64)
+        public_id = public_id_bytes.decode('utf-8')
+
+        user = User.objects.filter(public_id=public_id).first()
+
+    except Exception as e:
+        user = None
+
+    if user is not None and token_generator.check_token(user, token):
+        user.is_active = True
+        user.email_verified = True
+
+        user.save()
+
+        user.backend = 'django.contrib.auth.backends.ModelBackend'
+        login(request, user)
+        messages.success(request, 'Successfully created account')
+
+        return redirect('dashboard:dashboard')
+    
+    return render(request, 'email_verification/verify_email_failed.html')

@@ -15,6 +15,8 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
+DOMAIN = config('DOMAIN', cast=str, default='http://localhost:8000')
+
 
 # Application definition
 
