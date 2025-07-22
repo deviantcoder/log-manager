@@ -11,6 +11,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 from .forms import LoginForm, SignupForm, UsernameUpdateForm
+from .utils import send_verification_email
 
 
 User = get_user_model()
@@ -20,14 +21,27 @@ class LoginUserView(LoginView):
     template_name = 'accounts/login.html'
     form_class = LoginForm
     redirect_authenticated_user = True
+    success_url = 'dashboard:dashboard'
 
     def form_valid(self, form):
-        messages.success(self.request, 'Welcome back!')
-        return super().form_valid(form)
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+
+        user = authenticate(self.request, username=username, password=password)
+
+        if user is not None:
+            if user.email_verified:
+                messages.success(self.request, 'Welcome back!')
+                return redirect(self.get_success_url())
+            else:
+                send_verification_email(user)
+                return render(self.request, 'email_verification/verify_email_sent.html')
+        else:
+            messages.warning(self.request, 'Invalid email, username or password.')
+            return self.form_invalid(form)
     
     def form_invalid(self, form):
-        if '__all__' in form.errors:
-            messages.warning(self.request, 'Invalid email, username or password.')
+        messages.warning(self.request, 'Invalid email, username or password.')
         return super().form_invalid(form)
 
 
@@ -157,7 +171,7 @@ def verify_email(request, uidb64, token):
 
         user.backend = 'django.contrib.auth.backends.ModelBackend'
         login(request, user)
-        messages.success(request, 'Successfully created account')
+        messages.success(request, 'Successfully activated your account')
 
         return redirect('dashboard:dashboard')
     

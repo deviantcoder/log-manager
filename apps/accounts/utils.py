@@ -49,4 +49,4 @@ def send_verification_email(user: User):
             )
 
     except Exception as e:
-        logger.error(f'Error during email verification: {e}')
+        logger.error(f'Error during sending email verification: {e}')

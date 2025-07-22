@@ -37,8 +37,6 @@ class SignupForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=False)
 
-        user.is_active = False
-
         if commit:
             user.save()
             send_verification_email(user)

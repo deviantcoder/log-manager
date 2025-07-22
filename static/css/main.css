@@ -91,6 +91,7 @@
     border-color: #858f1c;
 }
 .card.archived {
+    border-style: dashed;
     border-width: 1px;
     border-color: #807f85;
 }
