@@ -39,7 +39,6 @@ class SignupForm(UserCreationForm):
 
         if commit:
             user.save()
-            send_verification_email(user)
 
         return user
 

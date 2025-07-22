@@ -20,15 +20,15 @@ logger = logging.getLogger(__name__)
 
 def send_verification_email(user: User):
     try:
-        if user.last_verification_email_sent:
-            now = timezone.now()
-            cooldown_delta = now - user.last_verification_email_sent
-
-            if cooldown_delta < datetime.timedelta(minutes=settings.EMAIL_RESEND_COOLDOWN):
-                logger.info(f'Verification email for: {user.username}, skipped due to cooldown.')
-                return False
-
         if user:
+            if user.last_verification_email_sent:
+                now = timezone.now()
+                cooldown_delta = now - user.last_verification_email_sent
+
+                if cooldown_delta < datetime.timedelta(minutes=settings.EMAIL_RESEND_COOLDOWN):
+                    logger.info(f'Verification email for: {user.username}, skipped due to cooldown.')
+                    return False
+
             token_generator = PasswordResetTokenGenerator()
 
             public_id = urlsafe_base64_encode(force_bytes(user.public_id))

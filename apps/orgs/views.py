@@ -1,12 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404
+
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+
 from django.http import HttpResponseForbidden
 from django.urls import reverse
 
-from .models import Organization
-from .forms import OrganizationForm, OrgStatusForm
+from .models import Organization, OrgInvite
+from .forms import OrganizationForm, OrgStatusForm, OrgInviteForm
 from .filters import OrgFilter
+from .utils import send_invite_email
+
+
+User = get_user_model()
 
 
 @login_required
@@ -155,3 +162,62 @@ def org_details(request, slug):
     }
 
     return render(request, 'dashboard/orgs/org_details.html', context)
+
+
+@login_required
+def invite_member(request, id):
+    org = get_object_or_404(Organization, pk=id)
+    form = OrgInviteForm()
+
+    if request.method == 'POST':
+        form = OrgInviteForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+
+            if request.user.email == email:
+                messages.warning(request, 'You cannot send an invitation to yourself.')
+                return redirect(request.META.get('HTTP_REFERER') or 'orgs:orgs_list')
+
+            if User.objects.filter(email=email).exclude(pk=request.user.pk).exists():
+                invite = form.save(commit=False)
+
+                invite.org = org
+                invite.invited_by = request.user
+                invite.is_existing_user = True
+
+                invite.save()               # TODO: Notify user in inbox (future feature)
+
+                messages.success(request, 'Sent an invitation.')
+            else:
+                invite = form.save(commit=False)
+
+                invite.org = org
+                invite.invited_by = request.user
+                invite.is_existing_user = False
+
+                invite.save()
+
+                send_invite_email(invite)
+
+                messages.success(request, 'Sent an email invitation.')
+
+            return redirect(request.META.get('HTTP_REFERER') or 'orgs:orgs_list')
+
+    context = {
+        'form': form,
+        'org': org,
+    }
+
+    return render(request, 'dashboard/orgs/partials/org_invite_form_partial.html', context)
+
+
+def accept_invite(request, token):
+    invite = get_object_or_404(
+        OrgInvite, token=token, accepted=False, declined=False
+    )
+
+    if invite.is_existing_user:
+        pass
+    else:
+        request.session['invite_token'] = str(invite.token)
+        return redirect('accounts:signup')

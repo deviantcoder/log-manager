@@ -173,6 +173,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'config.pipeline.verify_social_email',
+    'apps.accounts.pipeline.process_invite',
     'social_core.pipeline.user.user_details',
 )
 

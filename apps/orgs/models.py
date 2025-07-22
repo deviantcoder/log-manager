@@ -83,3 +83,26 @@ class OrgMember(models.Model):
 
     def __str__(self):
         return f'{self.user}: {self.org} ({self.role})'
+
+
+class OrgInvite(models.Model):
+    org = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    invited_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_invites')
+
+    email = models.EmailField()
+
+    token = models.UUIDField(default=uuid4, unique=True, editable=False)
+
+    accepted = models.BooleanField(default=False)
+    declined = models.BooleanField(default=False)
+
+    is_existing_user = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ('org', '-created_at')
+
+    def __str__(self):
+        return f'Invite for {self.email} from {self.invited_by}, org: {self.org}'

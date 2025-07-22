@@ -1,4 +1,5 @@
 import re
+import logging
 
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -11,10 +12,15 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 from django.views import generic
 from django.utils.http import urlsafe_base64_decode
+from django.urls import reverse_lazy
 
 from .forms import LoginForm, SignupForm, UsernameUpdateForm
 from .utils import send_verification_email
 
+from apps.orgs.models import OrgInvite, OrgMember
+
+
+logger = logging.getLogger(__name__)
 
 User = get_user_model()
 
@@ -23,13 +29,12 @@ class LoginUserView(LoginView):
     template_name = 'accounts/login.html'
     form_class = LoginForm
     redirect_authenticated_user = True
-    success_url = 'dashboard:dashboard'
+    success_url = reverse_lazy('dashboard:dashboard')
 
     def form_valid(self, form):
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
+        response = super().form_valid(form)
 
-        user = authenticate(self.request, username=username, password=password)
+        user = self.request.user
 
         if user is not None:
             if user.email_verified:
@@ -54,28 +59,50 @@ class LogoutUserView(LogoutView):
 class SignupUserView(generic.CreateView):
     template_name = 'accounts/signup.html'
     form_class = SignupForm
-    success_url = '/'
+    success_url = reverse_lazy('dashboard:dashboard')
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('/')
+
         return super().dispatch(request, *args, **kwargs)
     
     def form_valid(self, form):
         response = super().form_valid(form)
 
-        user = authenticate(
-            request=self.request,
-            username=form.cleaned_data.get('username'),
-            password=form.cleaned_data.get('password1'),
-        )
-        
+        user = form.instance
+
         if user is not None:
-            return render(
-                self.request,
-                'email_verification/verify_email_sent.html',
-                context={'sent': True}
-            )
+            if 'invite_token' in self.request.session:
+                token = self.request.session.get('invite_token')
+                invite = get_object_or_404(OrgInvite, token=token)
+
+                invite.accepted = True
+                invite.save(update_fields=['accepted'])
+
+                user.email_verified = True
+                user.save(update_fields=['email_verified'])
+
+                OrgMember.objects.create(org=invite.org, user=user)
+                
+                try:
+                    del self.request.session['invite_token']
+                except KeyError:
+                    logger.warning(f'No invite_token in session for {user}')
+                    
+                user.backend = 'django.contrib.auth.backends.ModelBackend'
+                login(self.request, user)
+                messages.success(self.request, f'You have joined {invite.org.name}')
+
+                return redirect(self.get_success_url())
+            else:
+                send_verification_email(user)
+
+                return render(
+                    self.request,
+                    'email_verification/verify_email_sent.html',
+                    context={'sent': True}
+                )
         
         return response
     

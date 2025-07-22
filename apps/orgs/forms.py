@@ -1,6 +1,7 @@
 from django import forms
+from django.core.validators import EmailValidator
 
-from .models import Organization
+from .models import Organization, OrgInvite
 
 
 class OrganizationForm(forms.ModelForm):
@@ -20,3 +21,13 @@ class OrgStatusForm(forms.ModelForm):
     class Meta:
         model = Organization
         fields = ('status',)
+
+
+class OrgInviteForm(forms.ModelForm):
+    class Meta:
+        model = OrgInvite
+        fields = ('email',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.update({'placeholder': 'johndoe@gmail.com'})

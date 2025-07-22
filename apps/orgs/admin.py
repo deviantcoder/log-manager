@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Organization, OrgMember
+from .models import Organization, OrgMember, OrgInvite
 
 
 @admin.register(Organization)
@@ -14,3 +14,8 @@ class OrganizationAdmin(admin.ModelAdmin):
 @admin.register(OrgMember)
 class OrgMemberAdmin(admin.ModelAdmin):
     model = OrgMember
+
+
+@admin.register(OrgInvite)
+class OrgInviteAdmin(admin.ModelAdmin):
+    model = OrgInvite

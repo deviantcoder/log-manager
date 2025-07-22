@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head><title>Email Verification</title></head>
+<body>
+    <h2>Hi, {{ invite.email }}.</h2>
+    <p>You’ve been invited by {{ invite.invited_by.username }} to join the organization: {{ invite.org.name }}.</p>
+    <p><a href="{{ accept_invite_url }}">{{ accept_invite_url }}</a></p>
+</body>
+</html>
