@@ -1,7 +1,7 @@
 {% extends 'dashboard/_base_dashboard.html' %}
 
 {% block title %}
-    <i class="bi bi-gear me-2"></i>Organization Settings: <span class="text-info">{{ org.name }}</span>
+    <i class="bi bi-gear me-2"></i>Organization Settings: <a href="{% url 'orgs:org_details' org.slug %}" class="text-info">{{ org.name }}</a>
 {% endblock title %}
 
 {% block dashboard_content %}

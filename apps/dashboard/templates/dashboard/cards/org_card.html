@@ -1,5 +1,14 @@
 {% extends 'dashboard/cards/card_base.html' %}
 
+{% block card_title %}
+    <div class="d-flex align-items-center">
+        <img src="{{ obj.image_or_default }}" alt="Org Logo"
+        class="rounded-circle border border-white border-2 me-2"
+        style="width: 42px; height: 42px; object-fit: cover;">
+        <a href="{{ obj_details_url }}"><h5 class="fw-bold">{{ obj.name }}</h5></a>
+    </div>
+{% endblock card_title %}
+
 {% block card_info %}
     <p class="text-muted small">{{ obj.description|slice:50 }}...</p>
     <span class="text-muted"><i class="bi bi-folder"></i> Projects: {{ obj.projects.count }}</span>

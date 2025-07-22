@@ -45,7 +45,7 @@ class Organization(models.Model):
     public_id = models.UUIDField(default=uuid4, unique=True, editable=False, db_index=True)
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ('status', '-created')
 
     def __str__(self):
         return self.name

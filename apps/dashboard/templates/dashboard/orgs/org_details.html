@@ -92,7 +92,14 @@
                                         <td>15,234</td>
                                         <td>2 minutes ago</td>
                                         <td>
-                                            <a href="" class="btn btn-sm btn-outline-primary">
+                                            <a
+                                                hx-get="{% url 'projects:project_overview' project.id %}"
+                                                hx-target="#modal-content"
+                                                hx-swap="innerHTML"
+                                                hx-trigger="click"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modal"
+                                                class="btn btn-sm btn-outline-primary">
                                                 <i class="bi bi-eye"></i>
                                             </a>
                                             <a href="{% url 'projects:project_settings' project.org.slug project.slug %}" class="btn btn-sm btn-outline-secondary">

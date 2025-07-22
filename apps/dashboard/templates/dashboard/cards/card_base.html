@@ -3,9 +3,9 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
-                    <a href="{{ obj_details_url }}"><h5 class="fw-bold">{{ obj.name }}</h5></a>
+                    {% block card_title %}
+                    {% endblock card_title %}
                     {% block card_info %}
-                        <p>Some info</p>
                     {% endblock card_info %}
                 </div>
                 {% include 'dashboard/partials/obj_status.html' %}

@@ -31,7 +31,7 @@ class Project(models.Model):
 
     class Meta:
         unique_together = ('org', 'slug')
-        ordering = ('-created',)
+        ordering = ('status', '-created',)
 
     def __str__(self):
         return self.name

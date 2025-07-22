@@ -1,7 +1,7 @@
 {% extends 'dashboard/_base_dashboard.html' %}
 
 {% block title %}
-    <i class="bi bi-gear me-2"></i>Project Settings: <span class="text-info">{{ project.name }}</span>
+    <i class="bi bi-gear me-2"></i>Project Settings: <a href="{% url 'projects:project_details' project.org.slug project.slug %}" class="text-info">{{ project.name }}</a>
 {% endblock title %}
 
 {% block dashboard_content %}
