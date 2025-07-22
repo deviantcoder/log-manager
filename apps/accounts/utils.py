@@ -1,8 +1,12 @@
 import logging
+import datetime
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
+from django.utils import timezone
+
 from django.urls import reverse
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -16,6 +20,14 @@ logger = logging.getLogger(__name__)
 
 def send_verification_email(user: User):
     try:
+        if user.last_verification_email_sent:
+            now = timezone.now()
+            cooldown_delta = now - user.last_verification_email_sent
+
+            if cooldown_delta < datetime.timedelta(minutes=settings.EMAIL_RESEND_COOLDOWN):
+                logger.info(f'Verification email for: {user.username}, skipped due to cooldown.')
+                return False
+
         if user:
             token_generator = PasswordResetTokenGenerator()
 
@@ -47,6 +59,11 @@ def send_verification_email(user: User):
                 recipient_list=[user.email],
                 html_message=message
             )
+
+            user.last_verification_email_sent = timezone.now()
+            user.save(update_fields=['last_verification_email_sent'])
+
+            return True
 
     except Exception as e:
         logger.error(f'Error during sending email verification: {e}')

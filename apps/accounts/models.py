@@ -21,6 +21,7 @@ class User(AbstractUser):
 
     email = models.EmailField(unique=True)
     email_verified = models.BooleanField(default=False)
+    last_verification_email_sent = models.DateTimeField(null=True, blank=True)
 
     image = models.ImageField(
         null=True,

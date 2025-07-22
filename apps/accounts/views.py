@@ -1,14 +1,16 @@
 import re
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+
+from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, get_user_model
-from django.views import generic
-from django.contrib import messages
-from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+
+from django.views import generic
+from django.utils.http import urlsafe_base64_decode
 
 from .forms import LoginForm, SignupForm, UsernameUpdateForm
 from .utils import send_verification_email
@@ -34,8 +36,8 @@ class LoginUserView(LoginView):
                 messages.success(self.request, 'Welcome back!')
                 return redirect(self.get_success_url())
             else:
-                send_verification_email(user)
-                return render(self.request, 'email_verification/verify_email_sent.html')
+                sent = send_verification_email(user)
+                return render(self.request, 'email_verification/verify_email_sent.html', context={'sent': sent})
         else:
             messages.warning(self.request, 'Invalid email, username or password.')
             return self.form_invalid(form)
@@ -69,11 +71,10 @@ class SignupUserView(generic.CreateView):
         )
         
         if user is not None:
-            # login(self.request, user)
-            # messages.success(self.request, 'Signed up.')
             return render(
                 self.request,
-                'email_verification/verify_email_sent.html'
+                'email_verification/verify_email_sent.html',
+                context={'sent': True}
             )
         
         return response
@@ -150,7 +151,7 @@ def check_username(request):
 
 def verify_email(request, uidb64, token):
     if request.user.is_authenticated and request.user.email_verified:
-        return redirect('/')
+        return redirect('dashboard:dashboard')
 
     token_generator = PasswordResetTokenGenerator()
 
@@ -158,7 +159,7 @@ def verify_email(request, uidb64, token):
         public_id_bytes = urlsafe_base64_decode(uidb64)
         public_id = public_id_bytes.decode('utf-8')
 
-        user = User.objects.filter(public_id=public_id).first()
+        user = get_object_or_404(User, public_id=public_id)
 
     except Exception as e:
         user = None
@@ -171,7 +172,7 @@ def verify_email(request, uidb64, token):
 
         user.backend = 'django.contrib.auth.backends.ModelBackend'
         login(request, user)
-        messages.success(request, 'Successfully activated your account')
+        messages.success(request, 'Successfully activated your account.')
 
         return redirect('dashboard:dashboard')
     
