@@ -1,6 +1,12 @@
+import logging
+
 from django.contrib import messages
 from django.utils.timezone import now
 from apps.orgs.models import OrgInvite, OrgMember
+
+
+logger = logging.getLogger(__name__)
+
 
 def process_invite(backend, user, request, *args, **kwargs):
     token = request.session.get('invite_token')
@@ -14,7 +20,10 @@ def process_invite(backend, user, request, *args, **kwargs):
 
             OrgMember.objects.get_or_create(org=invite.org, user=user)
 
-            del request.session['invite_token']
+            try:
+                del request.session['invite_token']
+            except KeyError:
+                logger.warning(f'No invite_token in session for {user}')
 
             messages.success(request, f"You've joined {invite.org.name}")
         except OrgInvite.DoesNotExist:

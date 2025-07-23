@@ -25,16 +25,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="text-end">
-                            <div class="btn-group">
-                                <a href="{% url 'orgs:org_settings' org.slug %}" class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-gear"></i> Settings
-                                </a>
-                                <a href="{% url 'projects:create_project' %}" class="btn btn-primary btn-sm">
-                                    <i class="bi bi-plus-circle"></i> New Project
-                                </a>
+                        {% if is_org_admin %}
+                            <div class="text-end">
+                                <div class="btn-group">
+                                    <a href="{% url 'orgs:org_settings' org.slug %}" class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-gear"></i> Settings
+                                    </a>
+                                    <a href="{% url 'projects:create_project' %}" class="btn btn-primary btn-sm">
+                                        <i class="bi bi-plus-circle"></i> New Project
+                                    </a>
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -55,9 +57,11 @@
                             <i class="bi bi-folder text-primary me-2"></i>
                             Projects
                         </h5>
-                        <a href="{% url 'projects:create_project' %}" class="btn btn-sm btn-outline-primary">
-                            <i class="bi bi-plus"></i> Add Project
-                        </a>
+                        {% if is_org_admin %}
+                            <a href="{% url 'projects:create_project' %}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-plus"></i> Add Project
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="card-body">
@@ -103,9 +107,11 @@
                                             >
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <a href="{% url 'projects:project_settings' project.org.slug project.slug %}" class="btn btn-sm btn-outline-secondary">
-                                                <i class="bi bi-gear"></i>
-                                            </a>
+                                            {% if is_org_admin %}
+                                                <a href="{% url 'projects:project_settings' project.org.slug project.slug %}" class="btn btn-sm btn-outline-secondary">
+                                                    <i class="bi bi-gear"></i>
+                                                </a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -121,17 +127,19 @@
                             <i class="bi bi-people text-primary me-2"></i>
                             Team Members
                         </h5>
-                        <a  
-                            hx-get="{% url 'orgs:invite_member' org.id %}"
-                            hx-target="#modal-content"
-                            hx-swap="innerHTML"
-                            hx-trigger="click"
-                            data-bs-toggle="modal"
-                            data-bs-target="#modal"
-                            class="btn btn-sm btn-outline-primary"
-                        >
-                            <i class="bi bi-plus"></i> Invite Member
-                        </a>
+                        {% if is_org_admin %}
+                            <a  
+                                hx-get="{% url 'orgs:invite_member' org.id %}"
+                                hx-target="#modal-content"
+                                hx-swap="innerHTML"
+                                hx-trigger="click"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modal"
+                                class="btn btn-sm btn-outline-primary"
+                            >
+                                <i class="bi bi-plus"></i> Invite Member
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="card-body">

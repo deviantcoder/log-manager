@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.http import HttpResponseForbidden
 from django.urls import reverse
 
-from .models import Organization, OrgInvite
+from .models import Organization, OrgInvite, OrgMember
 from .forms import OrganizationForm, OrgStatusForm, OrgInviteForm
 from .filters import OrgFilter
 from .utils import send_invite_email
@@ -152,13 +152,18 @@ def org_overview(request, id):
 @login_required
 def org_details(request, slug):
     org = get_object_or_404(Organization, slug=slug)
-    projects = org.projects.all()
-    members = org.members.all()
+    projects = org.projects.filter(members__user=request.user)
+    members = org.members.select_related('user')
+
+    is_org_admin = any(
+        m.user.id == request.user.id and m.role == OrgMember.ROLE_CHOICES.ADMIN for m in members
+    )
 
     context = {
         'org': org,
         'projects': projects,
         'members': members,
+        'is_org_admin': is_org_admin,
     }
 
     return render(request, 'dashboard/orgs/org_details.html', context)
