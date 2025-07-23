@@ -4,9 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.urls import reverse
 
-from .models import Project
-from .forms import ProjectCreateForm, ProjectEditForm, ProjectStatusForm
+from .models import Project, ProjectMember
+from .forms import ProjectCreateForm, ProjectEditForm, ProjectStatusForm, AddProjectMemberForm
 from .filters import ProjectFilter
+
+from apps.orgs.models import Organization
 
 
 @login_required
@@ -147,9 +149,42 @@ def project_overview(request, id):
 @login_required
 def project_details(request, org_slug, project_slug):
     project = get_object_or_404(Project, org__slug=org_slug, slug=project_slug)
+    members = project.members.select_related('user')
+
+    is_project_admin = any(
+        m.user == request.user and m.role == ProjectMember.ROLE_CHOICES.ADMIN for m in members
+    )
 
     context = {
         'project': project,
+        'members': members,
+        'is_project_admin': is_project_admin,
     }
 
     return render(request, 'dashboard/projects/project_details.html', context)
+
+
+@login_required
+def add_project_member(request, org_slug, project_slug):
+    org = get_object_or_404(Organization, slug=org_slug)
+    project = get_object_or_404(Project, org__slug=org_slug, slug=project_slug)
+    
+    if request.method == 'POST':
+        form = AddProjectMemberForm(request.POST, org=org, project=project)
+        if form.is_valid():
+            member = form.save(commit=False)
+            member.project = project
+            member.save()
+
+            messages.success(request, 'New member was added to the project team')
+
+            return redirect('projects:project_details', org_slug=org.slug, project_slug=project.slug)
+    else:
+        form = AddProjectMemberForm(org=org, project=project)
+
+    context = {
+        'form': form,
+        'project': project,
+    }
+
+    return render(request, 'dashboard/projects/partials/project_add_member.html', context)

@@ -12,6 +12,8 @@ from .forms import OrganizationForm, OrgStatusForm, OrgInviteForm
 from .filters import OrgFilter
 from .utils import send_invite_email
 
+from apps.projects.models import Project
+
 
 User = get_user_model()
 
@@ -152,7 +154,11 @@ def org_overview(request, id):
 @login_required
 def org_details(request, slug):
     org = get_object_or_404(Organization, slug=slug)
-    projects = org.projects.filter(members__user=request.user)
+
+    projects = org.projects.all()
+    active_projects_count = projects.filter(status=Project.StatusChoices.ACTIVE).count()
+    available_projects = projects.filter(members__user=request.user)
+    
     members = org.members.select_related('user')
 
     is_org_admin = any(
@@ -161,7 +167,8 @@ def org_details(request, slug):
 
     context = {
         'org': org,
-        'projects': projects,
+        'available_projects': available_projects,
+        'active_projects_count': active_projects_count,
         'members': members,
         'is_org_admin': is_org_admin,
     }

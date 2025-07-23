@@ -1,0 +1,23 @@
+{% extends "dashboard/partials/_base_modal_partial.html" %}
+{% load widget_tweaks %}
+
+{% block modal_header %}
+<h5 class="modal-title"><i class="bi bi-folder me-2"></i>Add project member</h5>
+{% endblock modal_header %}
+
+{% block modal_body %}
+<div class="text-center">
+    <form method="POST" action="{% url 'projects:add_project_member' project.org.slug project.slug %}">
+        {% csrf_token %}
+        <div class="mb-3 text-start">
+            <i class="bi bi-person-fill me-2"></i>{{ form.user|add_label_class:"form-label" }}
+            {% render_field form.user class="form-select" %}
+        </div>
+        <div class="mb-3 text-start">
+            <i class="bi bi-person-vcard-fill me-2"></i>{{ form.role|add_label_class:"form-label" }}
+            {% render_field form.role class="form-select" %}
+        </div>
+        <button type="submit" class="btn btn-outline-light btn-sm w-100 mt-4">Add member</button>
+    </form>
+</div>
+{% endblock modal_body %}
