@@ -158,7 +158,7 @@ def project_details(request, org_slug, project_slug):
     context = {
         'project': project,
         'members': members,
-        'is_project_admin': is_project_admin,
+        'is_admin': is_project_admin,
     }
 
     return render(request, 'dashboard/projects/project_details.html', context)

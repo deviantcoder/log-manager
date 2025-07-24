@@ -120,6 +120,8 @@
                     </div>
                 </div>
             </div>
+            {% url 'orgs:invite_member' org.id as add_member_url %}
+            {% include 'dashboard/includes/members_table.html' with add_member_url=add_member_url %}
             <div class="card shadow-sm mb-4">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
