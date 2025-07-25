@@ -20,8 +20,8 @@
             </ul>
             {% if not user.is_authenticated %}
                 <div class="ms-3">
-                    <a href="{% url 'accounts:login' %}" class="btn btn-outline-light">Login</a>
-                    <a href="{% url 'accounts:signup' %}" class="btn btn-light ms-2">Sign Up</a>
+                    <a href="{% url 'accounts:login' %}" class="btn btn-outline-light rounded-pill">Login</a>
+                    <a href="{% url 'accounts:signup' %}" class="btn btn-light ms-2 rounded-pill">Sign Up</a>
                 </div>
             {% else %}
                 <div class="dropdown ms-3">
