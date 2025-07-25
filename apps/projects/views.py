@@ -15,7 +15,8 @@ from apps.orgs.models import Organization
 def projects_list(request):
     projects_filter = ProjectFilter(
         request.GET,
-        queryset=Project.objects.filter(members__user=request.user)
+        queryset=Project.objects.filter(members__user=request.user),
+        request=request
     )
 
     context = {
