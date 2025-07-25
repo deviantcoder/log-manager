@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from apps.projects.models import Project
 
-from apps.orgs.models import Organization
+from apps.orgs.models import Organization, OrgInvite
 from apps.orgs.filters import OrgFilter
 
 
@@ -21,3 +21,19 @@ def dashboard(request):
 @login_required
 def settings_view(request):
     return render(request, 'dashboard/settings.html')
+
+
+@login_required
+def inbox(request):
+    pending_invites = OrgInvite.objects.filter(
+        is_existing_user=True,
+        email=request.user.email,
+        accepted=False,
+        declined=False
+    )
+
+    context = {
+        'pending_invites': pending_invites,
+    }
+
+    return render(request, 'dashboard/inbox.html', context)

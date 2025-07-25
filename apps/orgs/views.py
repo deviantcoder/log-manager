@@ -22,7 +22,8 @@ User = get_user_model()
 def orgs_list(request):
     orgs_filter = OrgFilter(
         request.GET,
-        queryset=Organization.objects.filter(members__user=request.user)
+        queryset=Organization.objects.filter(members__user=request.user),
+        request=request
     )
 
     context = {
@@ -170,7 +171,7 @@ def org_details(request, slug):
         'available_projects': available_projects,
         'active_projects_count': active_projects_count,
         'members': members,
-        'is_org_admin': is_org_admin,
+        'is_admin': is_org_admin,
     }
 
     return render(request, 'dashboard/orgs/org_details.html', context)
@@ -180,6 +181,9 @@ def org_details(request, slug):
 def invite_member(request, id):
     org = get_object_or_404(Organization, pk=id)
     form = OrgInviteForm()
+
+    if request.user != org.owner:
+        return HttpResponseForbidden()
 
     if request.method == 'POST':
         form = OrgInviteForm(request.POST)
@@ -229,7 +233,24 @@ def accept_invite(request, token):
     )
 
     if invite.is_existing_user:
-        pass
+        if request.method == 'POST':
+            
+            if 'accept_invite' in request.POST:
+                invite.accepted = True
+                invite.save(update_fields=['accepted'])
+
+                OrgMember.objects.get_or_create(
+                    user=request.user,
+                    org=invite.org,
+                )
+
+                return redirect('orgs:org_details', invite.org.slug)
+
+            elif 'decline_invite' in request.POST:
+                invite.declined = True
+                invite.save(update_fields=['declined'])
+
+                return redirect(request.META.get('HTTP_REFERER') or 'dashboard:inbox')
     else:
         request.session['invite_token'] = str(invite.token)
         return redirect('accounts:signup')

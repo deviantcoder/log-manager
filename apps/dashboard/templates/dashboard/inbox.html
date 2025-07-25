@@ -1,0 +1,36 @@
+{% extends 'dashboard/_base_dashboard.html' %}
+
+{% block title %}
+    <i class="bi bi-envelope me-2"></i>Inbox
+{% endblock title %}
+
+{% block description %}
+    Manage your messages and invitations
+{% endblock description %}
+
+{% block dashboard_content %}
+    <div class="container-fluid my-5">
+        <h2 class="mb-4">Pending Invitations</h2>
+        <ul class="list-group shadow">
+            {% for invite in pending_invites %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ invite.org.name }}</strong> – invited as <em>Admin</em><br>
+                        <small>Invited by: {{ invite.invited_by }}</small>
+                    </div>
+                    <div>
+                        <form method="POST" action="{% url 'orgs:accept_invite' invite.token %}">
+                            {% csrf_token %}
+                            <button type="submit" name="accept_invite" class="btn btn-sm btn-success me-2">Accept</button>
+                            <button type="submit" name="decline_invite" class="btn btn-sm btn-outline-danger">Decline</button>
+                        </form>
+                    </div>
+                </li>
+            {% empty %}
+                <div class="d-flex justify-content-center">
+                    <p class="text-muted mt-4">You have no pending invitations.</p>        
+                </div>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock dashboard_content %}

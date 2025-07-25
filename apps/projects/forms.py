@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 
 from .models import Project, ProjectMember
 
-from apps.orgs.models import OrgMember
+from apps.orgs.models import Organization
 
 
 logger = logging.getLogger(__name__)
