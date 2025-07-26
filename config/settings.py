@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'apps.dashboard.apps.DashboardConfig',
     'apps.orgs.apps.OrgsConfig',
     'apps.projects.apps.ProjectsConfig',
+    'apps.logs.apps.LogsConfig',
 ]
 
 MIDDLEWARE = [
