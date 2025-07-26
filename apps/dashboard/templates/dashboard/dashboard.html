@@ -1,23 +1,23 @@
 {% extends 'dashboard/_base_dashboard.html' %}
 
 {% block title %}
-    Dashboard
+    <i class="bi bi-bar-chart me-2"></i>Dashboard
 {% endblock title %}
 {% block description %}
     Manage your organizations, projects and monitor activity
 {% endblock description %}
 {% block stats %}
     <div class="row mb-3 border-bottom">
-        {% include 'dashboard/cards/stat_card.html' with stat_classes='col-md-4 mb-4' stat_title='Organizations' stat_value=orgs.count stat_icon='buildings' %}
-        {% include 'dashboard/cards/stat_card.html' with stat_classes='col-md-4 mb-4' stat_title='Active Projects' stat_value=projects.count stat_icon='folder' %}
+        {% include 'dashboard/cards/stat_card.html' with stat_classes='col-md-4 mb-4' stat_title='Organizations' stat_value=orgs_count stat_icon='buildings' %}
+        {% include 'dashboard/cards/stat_card.html' with stat_classes='col-md-4 mb-4' stat_title='Active Projects' stat_value=projects_count stat_icon='folder' %}
         {% include 'dashboard/cards/stat_card.html' with stat_classes='col-md-4 mb-4' stat_title='Logs' stat_value='1.2M' stat_icon='file-text' %}
     </div>
 {% endblock stats %}
 {% block cards %}
-    <h4>Organizations</h4>
+    <h4><i class="bi bi-buildings me-2"></i>Organizations</h4>
     {% include 'dashboard/orgs/partials/org_list.html' with orgs=orgs %}
     <div class="col-md-4">
-        <div class="add-org-card org-card h-100 d-flex flex-column border-dash align-items-center justify-content-center">
+        <div class="add-obj-card obj-card h-100 d-flex flex-column border-dash align-items-center justify-content-center">
             {% if orgs %}
                 <a href="{% url 'orgs:orgs_list' %}" class="btn btn-primary">
                     <i class="bi bi-plus me-2"></i>Show More
@@ -31,10 +31,10 @@
         </div>
     </div>
     <hr>
-    <h4>Projects</h4>
+    <h4><i class="bi bi-folder me-2"></i>Projects</h4>
     {% include 'dashboard/projects/partials/project_list.html' with projects=projects %}
     <div class="col-md-4">
-        <div class="add-org-card org-card h-100 d-flex flex-column border-dash align-items-center justify-content-center">
+        <div class="add-obj-card obj-card h-100 d-flex flex-column border-dash align-items-center justify-content-center">
             {% if projects %}
                 <a href="{% url 'projects:projects_list' %}" class="btn btn-primary">
                     <i class="bi bi-plus me-2"></i>Show More

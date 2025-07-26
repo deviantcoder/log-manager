@@ -10,7 +10,7 @@
         <div class="col-12">
             <div class="card shadow bg-cold rounded-4">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
+                    <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             <div class="d-flex align-items-center justify-content-center me-3">
                                 <img src="{{ org.image_or_default }}" alt="{{ org.name }} Logo"
@@ -27,11 +27,11 @@
                         </div>
                         {% if is_admin %}
                             <div class="text-end">
-                                <div class="btn-group">
-                                    <a href="{% url 'orgs:org_settings' org.slug %}" class="btn btn-outline-primary btn-sm">
+                                <div class="btn-group gap-2">
+                                    <a href="{% url 'orgs:org_settings' org.slug %}" class="btn btn-outline-primary btn-sm rounded-pill px-3 py-2">
                                         <i class="bi bi-gear"></i> Settings
                                     </a>
-                                    <a href="{% url 'projects:create_project' %}" class="btn btn-primary btn-sm">
+                                    <a href="{% url 'projects:create_project' %}" class="btn btn-primary btn-sm rounded-pill px-3 py-2">
                                         <i class="bi bi-plus-circle"></i> New Project
                                     </a>
                                 </div>
@@ -50,7 +50,7 @@
     </div>
     <div class="row">
         <div class="col-lg-8">
-            <div class="card shadow-sm mb-4">
+            <div class="card shadow-sm mb-4 rounded-4">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">
@@ -58,7 +58,7 @@
                             Projects
                         </h5>
                         {% if is_admin %}
-                            <a href="{% url 'projects:create_project' %}" class="btn btn-sm btn-outline-primary">
+                            <a href="{% url 'projects:create_project' %}" class="btn btn-sm btn-outline-primary rounded-pill">
                                 <i class="bi bi-plus"></i> Add Project
                             </a>
                         {% endif %}
@@ -103,12 +103,12 @@
                                                 hx-trigger="click"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modal"
-                                                class="btn btn-sm btn-outline-primary"
+                                                class="btn btn-sm btn-outline-primary rounded-circle"
                                             >
                                                 <i class="bi bi-eye"></i>
                                             </a>
                                             {% if is_admin %}
-                                                <a href="{% url 'projects:project_settings' project.org.slug project.slug %}" class="btn btn-sm btn-outline-secondary">
+                                                <a href="{% url 'projects:project_settings' project.org.slug project.slug %}" class="btn btn-sm btn-outline-secondary rounded-circle">
                                                     <i class="bi bi-gear"></i>
                                                 </a>
                                             {% endif %}
@@ -124,7 +124,7 @@
             {% include 'dashboard/includes/members_table.html' with add_member_url=add_member_url %}
         </div>
         <div class="col-lg-4">
-            <div class="card shadow-sm mb-4">
+            <div class="card shadow-sm rounded-4 mb-4">
                 <div class="card-header">
                     <h5 class="mb-0">
                         <i class="bi bi-info-circle me-2"></i>

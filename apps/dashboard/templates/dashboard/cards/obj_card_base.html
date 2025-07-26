@@ -1,5 +1,5 @@
 <div class="col-md-4">
-    <div class="card org-card {{ obj.status }} rounded-4 p-3">
+    <div class="card obj-card {{ obj.status }} rounded-4 p-3">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
@@ -20,11 +20,11 @@
                     hx-trigger="click"
                     data-bs-toggle="modal"
                     data-bs-target="#modal"
-                    class="btn btn-outline-primary btn-sm flex-fill"
+                    class="btn btn-outline-primary btn-sm flex-fill rounded-pill"
                 >
                     <i class="bi bi-eye me-1"></i>View Details
                 </a>
-                <a href="{{ obj_settings_url }}" class="btn btn-outline-secondary btn-sm">
+                <a href="{{ obj_settings_url }}" class="btn btn-outline-secondary btn-sm rounded-circle">
                     <i class="bi bi-gear"></i>
                 </a>
             </div>

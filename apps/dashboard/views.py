@@ -14,6 +14,8 @@ def dashboard(request):
     context = {
         'orgs': orgs[:2],
         'projects': projects[:2],
+        'orgs_count': orgs.count(),
+        'projects_count': projects.count(),
     }
     return render(request, 'dashboard/dashboard.html', context)
 

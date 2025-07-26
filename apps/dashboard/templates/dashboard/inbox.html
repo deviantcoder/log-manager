@@ -11,9 +11,9 @@
 {% block dashboard_content %}
     <div class="container-fluid my-5">
         <h2 class="mb-4">Pending Invitations</h2>
-        <ul class="list-group shadow">
+        <li class="list-group">
             {% for invite in pending_invites %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <li class="list-group-item shadow d-flex justify-content-between align-items-center rounded-4 p-4">
                     <div>
                         <strong>{{ invite.org.name }}</strong> – invited as <em>Admin</em><br>
                         <small>Invited by: {{ invite.invited_by }}</small>
@@ -21,14 +21,14 @@
                     <div>
                         <form method="POST" action="{% url 'orgs:accept_invite' invite.token %}">
                             {% csrf_token %}
-                            <button type="submit" name="accept_invite" class="btn btn-sm btn-success me-2">Accept</button>
-                            <button type="submit" name="decline_invite" class="btn btn-sm btn-outline-danger">Decline</button>
+                            <button type="submit" name="accept_invite" class="btn btn-sm btn-success rounded-pill px-5 py-2 me-2">Accept</button>
+                            <button type="submit" name="decline_invite" class="btn btn-sm btn-outline-danger rounded-pill px-5 py-2">Decline</button>
                         </form>
                     </div>
                 </li>
             {% empty %}
-                <div class="d-flex justify-content-center">
-                    <p class="text-muted mt-4">You have no pending invitations.</p>        
+                <div class="d-flex border justify-content-center align-items-center rounded-4">
+                    <p class="text-muted mt-3">You have no pending invitations.</p>        
                 </div>
             {% endfor %}
         </ul>

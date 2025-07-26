@@ -34,7 +34,7 @@
 
 {% block modal_footer %}
 <div class="d-flex justify-content-between gap-2 w-100">
-    <a href="{% url 'projects:project_details' project.org.slug project.slug %}" class="btn btn-outline-success btn-sm">View project</a>
-    <a href="{% url 'projects:project_settings' project.org.slug project.slug %}" class="btn btn-outline-primary btn-sm">Open Settings</a>
+    <a href="{% url 'projects:project_details' project.org.slug project.slug %}" class="btn btn-outline-success rounded-pill px-4">View project</a>
+    <a href="{% url 'projects:project_settings' project.org.slug project.slug %}" class="btn btn-outline-primary rounded-pill px-4">Open Settings</a>
 </div>
 {% endblock modal_footer %}

@@ -11,7 +11,7 @@
             <div class="col-12">
                 <div class="card shadow bg-cold rounded-4">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start">
+                        <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
                                 <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
                                     <i class="bi bi-folder text-white fs-2"></i>
@@ -25,11 +25,11 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <div class="btn-group">
-                                    <a href="{% url 'projects:project_settings' project.org.slug project.slug %}" class="btn btn-outline-primary btn-sm">
+                                <div class="btn-group gap-2">
+                                    <a href="{% url 'projects:project_settings' project.org.slug project.slug %}" class="btn btn-outline-primary btn-sm rounded-pill px-3 py-2">
                                         <i class="bi bi-gear"></i> Settings
                                     </a>
-                                    <a href="" class="btn btn-primary btn-sm">
+                                    <a href="" class="btn btn-primary btn-sm rounded-pill px-3 py-2">
                                         <i class="bi bi-file-earmark-text"></i> Export
                                     </a>
                                 </div>
@@ -47,7 +47,7 @@
         </div>
         <div class="row">
             <div class="col-lg-8">
-                <div class="card shadow-sm mb-4">
+                <div class="card shadow-sm mb-4 rounded-4">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">
@@ -60,7 +60,7 @@
                         <canvas id="logChart" width="400" height="200"></canvas>
                     </div>
                 </div>
-                <div class="card shadow-sm mb-4">
+                <div class="card shadow-sm rounded-4 mb-4">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">
@@ -75,7 +75,7 @@
                                     <option>INFO</option>
                                     <option>DEBUG</option>
                                 </select>
-                                <button class="btn btn-sm btn-outline-primary">
+                                <button class="btn btn-sm btn-outline-primary rounded-pill">
                                     <i class="bi bi-search"></i> Search
                                 </button>
                             </div>
@@ -133,7 +133,7 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="card shadow-sm mb-4">
+                <div class="card shadow-sm mb-4 rounded-4">
                     <div class="card-header">
                         <h5 class="mb-0">
                             <i class="bi bi-info-circle text-primary me-2"></i>

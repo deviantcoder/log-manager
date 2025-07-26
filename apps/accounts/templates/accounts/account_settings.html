@@ -25,14 +25,14 @@
                                 </div>
                                 <form method="post" action="{% url 'accounts:logout' %}">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-outline-danger rounded-2 px-4 shadow-sm">
+                                    <button type="submit" class="btn btn-outline-danger rounded-pill px-4 shadow-sm">
                                         <i class="bi bi-box-arrow-right me-2"></i>Sign Out
                                     </button>
                                 </form>
                             </div>
                         </div>
                         <div class="card-body px-4 pb-4">
-                            <div class="mb-4 p-3 bg-secondary bg-opacity-25 rounded-2">
+                            <div class="mb-4 p-3 bg-secondary bg-opacity-25 rounded-4">
                                 <label class="form-label fw-semibold text-light mb-2">
                                     <i class="bi bi-envelope me-2"></i>Email Address
                                 </label>
@@ -67,7 +67,7 @@
                                     <div id="username-feedback" class="mt-1"></div>
                                 </div>
                                 <div class="d-grid">
-                                    <button type="submit" id="submitBtn" name="update_username" class="btn btn-outline-info rounded-2 shadow-sm">
+                                    <button type="submit" id="submitBtn" name="update_username" class="btn btn-outline-info rounded-pill shadow-sm">
                                         <i class="bi bi-check-circle me-2"></i>Update Username
                                     </button>
                                 </div>
@@ -103,7 +103,7 @@
                             <form action="{% url 'accounts:settings' %}" method="post" enctype="multipart/form-data" class="d-grid gap-2" id="imageForm">
                                 {% csrf_token %}
                                 <input type="file" name="image" class="d-none" id="imageInput" accept="image/*" onchange="this.form.submit();">
-                                <button type="button" class="btn btn-outline-light rounded-2" onclick="document.getElementById('imageInput').click();">
+                                <button type="button" class="btn btn-outline-light rounded-pill" onclick="document.getElementById('imageInput').click();">
                                     <i class="bi bi-upload me-2"></i>Change Picture
                                 </button>
                                 <input type="hidden" name="update_image" value="true">
