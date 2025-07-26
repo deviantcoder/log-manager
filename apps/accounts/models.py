@@ -42,7 +42,7 @@ class User(AbstractUser):
         return self.username
     
     def save(self, *args, **kwargs):
-        return super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
     
     @property
     def image_or_default(self):
