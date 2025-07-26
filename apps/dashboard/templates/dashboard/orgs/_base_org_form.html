@@ -9,7 +9,7 @@
         <div class="text-center">
             <form method="POST" 
                 {% if obj %}
-                    action="{% url obj_url obj.id %}"
+                    action="{% url obj_url obj.slug %}"
                 {% else %}
                     action="{% url obj_url %}"
                 {% endif %}
@@ -31,7 +31,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 {% endif %}
-                <button type="submit" class="btn btn-primary w-100 mt-2">{{ action }}</button>
+                <button type="submit" class="btn btn-primary w-100 mt-2 rounded-pill">{{ action }}</button>
             </form>
         </div> 
     </div>

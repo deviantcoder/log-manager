@@ -79,7 +79,7 @@
                             <tbody>
                                 {% for project in available_projects %}
                                     <tr>
-                                        <td>
+                                        <td class="align-middle">
                                             <div class="d-flex align-items-center">
                                                 <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
                                                     <i class="bi bi-folder"></i>
@@ -90,12 +90,14 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
-                                            {% include 'dashboard/partials/obj_status.html' with obj=project %}
+                                        <td class="align-middle">
+                                            <div class="d-flex align-items-center">
+                                                {% include 'dashboard/partials/obj_status.html' with obj=project %}
+                                            </div>
                                         </td>
-                                        <td>15,234</td>
-                                        <td>2 minutes ago</td>
-                                        <td>
+                                        <td class="align-middle">15,234</td>
+                                        <td class="align-middle">2 minutes ago</td>
+                                        <td class="align-middle">
                                             <a
                                                 hx-get="{% url 'projects:project_overview' project.id %}"
                                                 hx-target="#modal-content"

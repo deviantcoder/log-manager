@@ -108,7 +108,7 @@ def org_settings(request, slug):
 
             messages.success(request, 'Organization was updated.')
 
-            return redirect('dashboard:orgs')
+            return redirect('orgs:org_settings', org.slug)
     else:
         form = OrganizationForm(instance=org)
     
