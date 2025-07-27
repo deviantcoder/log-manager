@@ -44,14 +44,18 @@ class LogSource(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ('-name', 'created')
+        unique_together = ('project', 'name')
+
+    def __str__(self):
+        return f'{self.project}/{self.name}'
+    
     def save(self, *args, **kwargs):
         if self._state.adding and not self.api_key:
             self.api_key = self.generate_api_key()
 
         super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f'{self.project}/{self.name}'
     
     def generate_api_key(self):
         return str(uuid4()).replace('-', '')
@@ -74,6 +78,8 @@ class LogEntry(models.Model):
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='logs')
     source = models.ForeignKey(LogSource, on_delete=models.CASCADE, related_name='logs')
+
+    meta_data = models.JSONField(null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
 
