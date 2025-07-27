@@ -1,7 +1,9 @@
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
+
 from django.urls import path, include
 from django.views import generic
-from django.contrib.auth import views as auth_views
+
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -18,6 +20,8 @@ urlpatterns = [
     path('dashboard/', include('apps.dashboard.urls')),
     path('dashboard/organizations/', include('apps.orgs.urls')),
     path('dashboard/', include('apps.projects.urls')),
+
+    path('api-auth/', include('rest_framework.urls')),
 
     # password reset
     path(

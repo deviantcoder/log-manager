@@ -13,6 +13,11 @@
     height: 40px;
     object-fit: cover;
 }
+.logo-sm {
+    width: 40px;
+    height: 30px;
+    object-fit: cover;
+}
 .navbar {
     background: rgba(49, 56, 70, 0.3) !important;
     backdrop-filter: blur(10px) !important;
@@ -97,4 +102,10 @@
     border-style: dashed;
     border-width: 1px;
     border-color: #807f85;
+}
+.blurred {
+    background-color: rgba(0, 48, 48, 0.159);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 1rem;
 }

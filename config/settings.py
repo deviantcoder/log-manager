@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'debug_toolbar',
     'django_htmx',
+    'rest_framework',
     
     # project apps
     'apps.accounts.apps.AccountsConfig',

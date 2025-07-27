@@ -8,35 +8,45 @@
 <div class="container-fluid mt-4">
     <div class="row g-3 mb-4">
         <div class="col-12">
-            <div class="card shadow bg-cold rounded-4">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex align-items-center">
-                            <div class="d-flex align-items-center justify-content-center me-3">
-                                <img src="{{ org.image_or_default }}" alt="{{ org.name }} Logo"
-                                    class="rounded-circle border border-white border-2"
-                                    style="width: 60px; height: 60px; object-fit: cover;">
-                            </div>
-                            <div>
-                                <h4 class="mb-1"><i class="bi bi-buildings me-2"></i>{{ org.name }}</h4>
-                                <p class="text-muted mb-2">{{ org.description }}</p>
-                                <div class="d-flex flex-wrap gap-2">
-                                    {% include 'dashboard/partials/obj_status.html' with obj=org %}
+            <div class="card obj-card bg-cold {{ obj.status }} border-secondary rounded-4"
+            {% if org.image %}
+                style="background-image: url('{{ org.image.url }}'); background-size: cover; background-position: center; background-repeat: no-repeat;"
+            {% endif %}
+            >   
+                <div 
+                {% if org.image %}
+                    class="blurred"
+                {% endif %}
+                >
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center justify-content-center me-3">
+                                    <img src="{{ org.image_or_default }}" alt="{{ org.name }} Logo"
+                                        class="rounded-circle border border-white border-2"
+                                        style="width: 60px; height: 60px; object-fit: cover;">
+                                </div>
+                                <div>
+                                    <h4 class="mb-1"><i class="bi bi-buildings me-2"></i>{{ org.name }}</h4>
+                                    <p class="text-muted mb-2">{{ org.description }}</p>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        {% include 'dashboard/partials/obj_status.html' with obj=org %}
+                                    </div>
                                 </div>
                             </div>
+                            {% if is_admin %}
+                                <div class="text-end">
+                                    <div class="btn-group gap-2">
+                                        <a href="{% url 'orgs:org_settings' org.slug %}" class="btn btn-outline-primary btn-sm rounded-pill px-3 py-2">
+                                            <i class="bi bi-gear"></i> Settings
+                                        </a>
+                                        <a href="{% url 'projects:create_project' %}" class="btn btn-primary btn-sm rounded-pill px-3 py-2">
+                                            <i class="bi bi-plus-circle"></i> New Project
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endif %}
                         </div>
-                        {% if is_admin %}
-                            <div class="text-end">
-                                <div class="btn-group gap-2">
-                                    <a href="{% url 'orgs:org_settings' org.slug %}" class="btn btn-outline-primary btn-sm rounded-pill px-3 py-2">
-                                        <i class="bi bi-gear"></i> Settings
-                                    </a>
-                                    <a href="{% url 'projects:create_project' %}" class="btn btn-primary btn-sm rounded-pill px-3 py-2">
-                                        <i class="bi bi-plus-circle"></i> New Project
-                                    </a>
-                                </div>
-                            </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -51,7 +61,7 @@
     <div class="row">
         <div class="col-lg-8">
             <div class="card shadow-sm mb-4 rounded-4">
-                <div class="card-header">
+                <div class="card-header rounded-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">
                             <i class="bi bi-folder text-primary me-2"></i>
@@ -127,7 +137,7 @@
         </div>
         <div class="col-lg-4">
             <div class="card shadow-sm rounded-4 mb-4">
-                <div class="card-header">
+                <div class="card-header rounded-4">
                     <h5 class="mb-0">
                         <i class="bi bi-info-circle me-2"></i>
                         Organization Details
@@ -138,15 +148,6 @@
                         <li class="mb-3">
                             <strong>Created:</strong>
                             <div class="text-muted">{{ org.created|date:"M d, Y" }}</div>
-                        </li>
-                        <li class="">
-                            <strong>API Key:</strong>
-                            <div class="d-flex align-items-center">
-                                <code class="me-2">tc_****_***_****</code>
-                                <button class="btn btn-sm btn-outline-secondary">
-                                    <i class="bi bi-copy"></i>
-                                </button>
-                            </div>
                         </li>
                     </ul>
                 </div>

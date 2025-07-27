@@ -1,32 +1,42 @@
 <div class="col-md-4">
-    <div class="card obj-card {{ obj.status }} rounded-4 p-3">
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    {% block card_title %}
-                    {% endblock card_title %}
-                    {% block card_info %}
-                    {% endblock card_info %}
+    <div class="card obj-card {{ obj.status }} rounded-4"
+    {% if obj.image %}
+        style="background-image: url('{{ obj.image.url }}'); background-size: cover; background-position: center; background-repeat: no-repeat;"
+    {% endif %}
+    >   
+        <div 
+        {% if obj.image %}
+            class="blurred"
+        {% endif %}
+        >
+            <div class="card-body p-3 m-3">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        {% block card_title %}
+                        {% endblock card_title %}
+                        {% block card_info %}
+                        {% endblock card_info %}
+                    </div>
+                    {% include 'dashboard/partials/obj_status.html' %}
                 </div>
-                {% include 'dashboard/partials/obj_status.html' %}
             </div>
-        </div>
-        <div class="org-card-footer p-3">
-            <div class="d-flex gap-2">
-                <a
-                    hx-get="{% url obj_overview_url obj.id %}"
-                    hx-target="#modal-content"
-                    hx-swap="innerHTML"
-                    hx-trigger="click"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modal"
-                    class="btn btn-outline-primary btn-sm flex-fill rounded-pill"
-                >
-                    <i class="bi bi-eye me-1"></i>View Details
-                </a>
-                <a href="{{ obj_settings_url }}" class="btn btn-outline-secondary btn-sm rounded-circle">
-                    <i class="bi bi-gear"></i>
-                </a>
+            <div class="org-card-footer p-3 m-3">
+                <div class="d-flex gap-2">
+                    <a
+                        hx-get="{% url obj_overview_url obj.id %}"
+                        hx-target="#modal-content"
+                        hx-swap="innerHTML"
+                        hx-trigger="click"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modal"
+                        class="btn btn-outline-primary btn-sm flex-fill rounded-pill"
+                    >
+                        <i class="bi bi-eye me-1"></i>View Details
+                    </a>
+                    <a href="{{ obj_settings_url }}" class="btn btn-outline-secondary btn-sm rounded-circle">
+                        <i class="bi bi-gear"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
