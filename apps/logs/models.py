@@ -1,3 +1,6 @@
+import secrets
+import hashlib
+
 from uuid import uuid4
 
 from django.db import models
@@ -33,7 +36,7 @@ class LogSource(models.Model):
         max_length=10, choices=SOURCE_STATUSES.choices, default=SOURCE_STATUSES.ACTIVE
     )
 
-    api_key = models.CharField(max_length=32, unique=True, editable=False)
+    api_key_hash = models.CharField(max_length=64, unique=True, editable=False, null=True)
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='sources')
 
@@ -52,13 +55,24 @@ class LogSource(models.Model):
         return f'{self.project}/{self.name}'
     
     def save(self, *args, **kwargs):
-        if self._state.adding and not self.api_key:
-            self.api_key = self.generate_api_key()
+        if self._state.adding and not self.api_key_hash:
+            raw_api_key = self.generate_api_key()
+
+            self.api_key_hash = self.hash_api_key(raw_api_key)
+            self._raw_api_key = raw_api_key
 
         super().save(*args, **kwargs)
     
-    def generate_api_key(self):
-        return str(uuid4()).replace('-', '')
+    @staticmethod
+    def generate_api_key():
+        return secrets.token_hex(16)
+    
+    @staticmethod
+    def hash_api_key(key):
+        return hashlib.sha256(key.encode('utf-8')).hexdigest()
+    
+    def get_raw_api_key(self):
+        return getattr(self, '_raw_api_key', None)
 
 
 class LogEntry(models.Model):
@@ -84,6 +98,8 @@ class LogEntry(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        verbose_name = 'Log entry'
+        verbose_name_plural = 'Log entries'
         ordering = ('-created',)
         indexes = [
             models.Index(fields=['source', 'timestamp'], name='log_source_timestamp_idx'),
