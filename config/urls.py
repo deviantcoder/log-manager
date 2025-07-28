@@ -21,6 +21,7 @@ urlpatterns = [
     path('dashboard/organizations/', include('apps.orgs.urls')),
     path('dashboard/', include('apps.projects.urls')),
 
+    path('api/', include('apps.logs.urls')),
     path('api-auth/', include('rest_framework.urls')),
 
     # password reset
