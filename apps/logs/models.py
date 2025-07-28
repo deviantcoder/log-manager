@@ -31,7 +31,10 @@ class LogSource(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=500, null=True, blank=True)
 
-    source_type = models.CharField(max_length=25, choices=SOURCE_TYPES.choices)
+    source_type = models.CharField(
+        max_length=25, choices=SOURCE_TYPES.choices, default=SOURCE_TYPES.CUSTOM
+    )
+    
     status = models.CharField(
         max_length=10, choices=SOURCE_STATUSES.choices, default=SOURCE_STATUSES.ACTIVE
     )
