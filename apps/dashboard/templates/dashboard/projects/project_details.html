@@ -160,9 +160,15 @@
                                 <i class="bi bi-hdd-network text-primary me-2"></i>
                                 Log Sources
                             </h5>
-                            <a href="" 
-                            class="btn btn-sm btn-outline-primary rounded-pill">
-                                <i class="bi bi-plus"></i> Add
+                            <a  
+                                hx-get="{% url 'logs:create_log_source' project.id %}"
+                                hx-target="#modal-content"
+                                hx-swap="innerHTML"
+                                hx-trigger="click"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modal" 
+                                class="btn btn-sm btn-outline-primary rounded-pill">
+                                <i class="bi bi-plus me-2"></i>Add
                             </a>
                         </div>
                     </div>
@@ -210,8 +216,7 @@
                             <div class="text-center py-4">
                                 <i class="bi bi-hdd-network text-muted mb-2" style="font-size: 2rem;"></i>
                                 <p class="text-muted mb-3">No log sources configured yet</p>
-                                <a href="" 
-                                class="btn btn-primary btn-sm rounded-pill">
+                                <a href="{% url 'logs:create_log_source' project.id %}" class="btn btn-primary btn-sm rounded-pill">
                                     <i class="bi bi-plus"></i> Add Your First Source
                                 </a>
                             </div>

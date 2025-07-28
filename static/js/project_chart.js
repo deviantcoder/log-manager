@@ -17,7 +17,7 @@ const logChart = new Chart(ctx, {
             tension: 0.1
         }, {
             label: 'ERROR',
-            data: [5, 8, 12, 15, 18, 12, 8],
+            data: [5, 8, 12, 200, 18, 12, 8],
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             tension: 0.1

@@ -1,8 +1,8 @@
 from rest_framework import views, status
 from rest_framework.response import Response
 
-from .authentication import APIKeyAuthentication
-from .serializers import LogEntrySerializer
+from apps.logs.authentication import APIKeyAuthentication
+from apps.logs.serializers import LogEntrySerializer
 
 
 class LogIngestionAPIView(views.APIView):
