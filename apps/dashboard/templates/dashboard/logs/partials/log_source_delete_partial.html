@@ -1,0 +1,23 @@
+{% extends 'dashboard/partials/_base_modal_partial.html' %}
+
+{% block modal_header %}
+    <span class="modal-title text-white fw-bold">Delete <span class="text-info">{{ source.name }}</span></span>
+{% endblock modal_header %}
+
+{% block modal_body %}
+    <div class="text-center">
+        <span class="text-white fw-bold fs-5">{{ source.name }}</span>
+    </div>
+{% endblock modal_body %}
+
+{% block modal_footer %}
+    <a
+        hx-get="{% url 'logs:delete_log_source_confirm' source.id %}"
+        hx-target="#modal-content"
+        hx-swap="innerHTML"
+        hx-trigger="click"
+        class="btn btn-outline-danger w-100 rounded-pill"
+    >
+        I want to delete this source
+    </a>
+{% endblock modal_footer %}

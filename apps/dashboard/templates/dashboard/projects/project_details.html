@@ -208,9 +208,18 @@
                                                                 <i class="bi bi-eye me-2"></i>View Details
                                                             </a>
                                                         </li>
+                                                        <hr>
                                                         <li>
-                                                            <a class="dropdown-item" href="">
-                                                                <i class="bi bi-gear me-2"></i>Settings
+                                                            <a
+                                                                hx-get="{% url 'logs:delete_log_source' source.id %}"
+                                                                hx-target="#modal-content"
+                                                                hx-swap="innerHTML"
+                                                                hx-trigger="click"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#modal"
+                                                                class="dropdown-item text-danger"
+                                                            >
+                                                                <i class="bi bi-trash me-2"></i>Delete
                                                             </a>
                                                         </li>
                                                     </ul>
