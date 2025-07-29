@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from apps.logs.forms import LogSourceForm
+from apps.logs.models import LogSource
+
 from apps.projects.models import Project
 
 
@@ -32,3 +34,14 @@ def create_log_source(request, project_id):
     }
 
     return render(request, 'dashboard/logs/partials/log_source_form_partial.html', context)
+
+
+@login_required
+def log_source_overview(request, source_id):
+    source = get_object_or_404(LogSource, id=source_id)
+
+    context = {
+        'source': source,
+    }
+
+    return render(request, 'dashboard/logs/partials/log_source_overview_partial.html', context)

@@ -196,7 +196,15 @@
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                         <li>
-                                                            <a class="dropdown-item" href="">
+                                                            <a
+                                                                hx-get="{% url 'logs:log_source_overview' source.id %}"
+                                                                hx-target="#modal-content"
+                                                                hx-swap="innerHTML"
+                                                                hx-trigger="click"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#modal"
+                                                                class="dropdown-item"
+                                                            >
                                                                 <i class="bi bi-eye me-2"></i>View Details
                                                             </a>
                                                         </li>

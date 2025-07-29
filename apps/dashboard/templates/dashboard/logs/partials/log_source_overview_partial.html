@@ -1,0 +1,17 @@
+{% extends "dashboard/partials/_base_modal_partial.html" %}
+
+{% block modal_header %}
+<h5 class="modal-title"><i class="bi bi-hdd-network me-2"></i>{{ source.name }}</h5>
+{% endblock modal_header %}
+
+{% block modal_body %}
+<ul class="list-unstyled mb-0">
+    <li class="mb-2"><strong>Status:</strong> {% include 'dashboard/partials/obj_status.html' with obj=source %}</li>
+    <li class="mb-2"><strong>Created by:</strong> {{ source.created_by|default:source.created_by.username }}</li>
+    <li class="mb-2"><strong>Description:</strong>
+        <p class="text-muted mt-1">{{ source.description|default:"No description provided." }}</p>
+    </li>
+    <li class="mb-2"><strong>Created:</strong> {{ source.created|date:"M d, Y H:i" }}</li>
+    <li><strong>Updated:</strong> {{ source.updated|date:"M d, Y H:i" }}</li>
+</ul>
+{% endblock modal_body %}
