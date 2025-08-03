@@ -1,0 +1,33 @@
+{% extends "dashboard/partials/_base_modal_partial.html" %}
+
+{% block modal_header %}
+<div class="d-flex align-items-center">
+    <i class="bi bi-key me-2"></i>
+    <h5 class="modal-title fw-bold">API Key Created</h5>
+</div>
+{% endblock modal_header %}
+
+{% block modal_body %}
+<div class="alert alert-warning rounded-4">
+    <i class="bi bi-exclamation-triangle me-2"></i>
+    <strong>Important:</strong> This is your API key. You won’t be able to see it again.
+</div>
+<div class="input-group mb-3">
+    <input type="text" class="form-control rounded-start-pill" value="{{ api_key }}" readonly id="api-key-field">
+    <button class="btn btn-outline-secondary rounded-end-pill" type="button" onclick="copyApiKey()">Copy</button>
+</div>
+<a class="btn btn-primary w-100 rounded-pill" href="{% url 'projects:project_details' source.project.org.slug source.project.slug %}">
+    Done
+</a>
+<script>
+function copyApiKey() {
+    const input = document.getElementById('api-key-field');
+    input.select();
+    input.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(input.value)
+        .then(() => {
+            alert('API key copied to clipboard!');
+        });
+}
+</script>
+{% endblock modal_body %}

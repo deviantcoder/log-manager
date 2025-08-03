@@ -9,7 +9,7 @@
 {% endblock modal_header %}
 
 {% block modal_body %}
-<form method="POST" action="{% url 'logs:create_log_source' project.id %}">
+<form hx-post="{% url 'logs:create_log_source' project.id %}" hx-target="#modal-content" hx-swap="innerHTML">
     {% csrf_token %}
     <div class="mb-3 text-start">
         <i class="bi bi-type me-2"></i> {{ form.name|add_label_class:"form-label" }}

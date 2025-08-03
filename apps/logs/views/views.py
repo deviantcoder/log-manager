@@ -27,7 +27,14 @@ def create_log_source(request, project_id):
 
             messages.success(request, 'New source was added.')
 
-            return redirect('projects:project_details', project.org.slug, project.slug)
+            # return redirect('projects:project_details', project.org.slug, project.slug)
+
+            context = {
+                'source': source,
+                'api_key': source.get_raw_api_key(),
+            }
+
+            return render(request, 'dashboard/logs/partials/log_source_created_partial.html', context)
     else:
         form = LogSourceForm()
 
